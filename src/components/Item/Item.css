@@ -1,0 +1,22 @@
+.item-card {
+    box-shadow: 8px 8px 37px -19px rgba(66, 68, 90, 1);
+    transition: all 0.2s ease-in-out;
+}
+
+.item-card:hover {
+    box-shadow: 8px 8px 9px -5px rgba(66, 68, 90, 1);
+    transform: scale(1.05);
+    z-index: 9999;
+}
+
+.item-card div {
+    max-height: 15rem;
+}
+
+.item-img {
+    max-height: 15rem;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    z-index: 1;
+}

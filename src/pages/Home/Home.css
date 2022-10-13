@@ -1,0 +1,22 @@
+.home span {
+    margin-right: 25px;
+
+    font-size: 20px;
+    opacity: 0.8;
+
+    transition: all 0.2s ease;
+}
+
+.home span:hover {
+    padding-bottom: 3px;
+    border-bottom: 3px solid rgb(126, 126, 126);
+    color: rgb(116, 116, 116);
+
+    cursor: pointer;
+}
+
+.home .active {
+    padding-bottom: 3px;
+    border-bottom: 3px solid rgb(126, 126, 126);
+    color: rgb(116, 116, 116);
+}

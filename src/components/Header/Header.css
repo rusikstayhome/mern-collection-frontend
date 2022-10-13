@@ -1,0 +1,22 @@
+.header a {
+    text-decoration: none;
+    color: white;
+}
+
+.header a:hover {
+    text-decoration: none;
+    color: rgb(145, 145, 145);
+}
+
+.header .active {
+    color: rgb(145, 145, 145);
+}
+
+.header .nav-brand {
+    color: rgba(13, 110, 253);
+    font-size: 24px;
+}
+.header .nav-brand:hover {
+    font-size: 24px;
+    color: rgba(13, 110, 253);
+}

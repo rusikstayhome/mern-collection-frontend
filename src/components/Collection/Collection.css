@@ -1,0 +1,22 @@
+.collection-card {
+    box-shadow: 8px 8px 37px -19px rgba(66, 68, 90, 1);
+    transition: all 0.2s ease-in-out;
+    z-index: 1;
+}
+
+.collection-card:hover {
+    box-shadow: 8px 8px 9px -5px rgba(66, 68, 90, 1);
+    transform: scale(1.05);
+    z-index: 9999;
+}
+
+.collection-card div {
+    max-height: 25rem;
+}
+
+.collection-img {
+    max-height: 20rem;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
