@@ -11,12 +11,14 @@
 
 .item-card div {
     max-height: 15rem;
+    border-radius: 5px;
 }
 
 .item-img {
     max-height: 15rem;
     width: 100%;
     display: block;
+    border-radius: 5px 5px 0 0;
     object-fit: cover;
     z-index: 1;
 }
