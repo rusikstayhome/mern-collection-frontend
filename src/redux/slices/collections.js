@@ -54,9 +54,20 @@ const collectionsSlice = createSlice({
             state.tags.items = action.payload;
             state.tags.status = 'loaded';
         },
-        [fetchTags.rejected]: (state) => {
+        [fetchItems.rejected]: (state) => {
             state.tags.items = [];
             state.tags.status = 'error';
+        },
+        [fetchItems.pending]: (state) => {
+            state.items.status = 'loading';
+        },
+        [fetchItems.fulfilled]: (state, action) => {
+            state.items.items = action.payload;
+            state.items.status = 'loaded';
+        },
+        [fetchItems.rejected]: (state) => {
+            state.items.items = [];
+            state.items.status = 'error';
         },
     }
 });

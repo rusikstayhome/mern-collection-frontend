@@ -2,8 +2,7 @@ import React from 'react'
 
 import './Tags.css'
 
-const Tags = ({ isTagsLoading, tags }) => {
-    console.log(tags)
+const Tags = ({ isLoading, tags }) => {
     return (
         <div className='tags sticky'>
             <h4 className='px-3'>Tags:</h4>

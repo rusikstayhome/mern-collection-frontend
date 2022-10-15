@@ -7,23 +7,26 @@ import axios from '../../axios'
 import Item from '../../components/Item/Item'
 import Tags from '../../components/Tags/Tags'
 import Collection from '../../components/Collection/Collection'
-import { fetchCollections, fetchTags } from '../../redux/slices/collections'
+import { fetchCollections, fetchTags, fetchItems } from '../../redux/slices/collections'
 
 import './Home.css'
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { collections, tags } = useSelector(state => state.collections);
+  const { collections, tags, items } = useSelector(state => state.collections);
 
   const isCollectionsLoading = collections.status === 'loading'
+  const isItemsLoading = collections.status === 'loading'
   const isTagsLoading = tags.status === 'loading'
 
   useEffect(() => {
     dispatch(fetchCollections())
     dispatch(fetchTags())
+    dispatch(fetchItems())
   }, []);
 
   const [showItems, setShowItems] = useState(true);
+  let [count, setCount] = useState(4)
 
   return (
     <Container>
@@ -35,17 +38,21 @@ const Home = () => {
         <Col sm={8}>
           {showItems ? (
             <Row>
-              {(isCollectionsLoading ?
+              {(isItemsLoading ?
                 [...Array(4)]
                 :
-                collections.items).map((obj, index) =>
-                  isCollectionsLoading ?
+                items.items.slice(0, count)).map((obj, index) =>
+                  isItemsLoading ?
                     <Item key={index} />
                     :
                     (
                       <Col className='col-6'>
-                        <Item key={index}
-                          isLoading={isCollectionsLoading}
+                        <Item
+                          key={index}
+                          isLoading={isItemsLoading}
+                          id={obj._id}
+                          name={obj.name}
+                          likes={obj.likes}
                         />
                       </Col>
                     )
@@ -56,7 +63,7 @@ const Home = () => {
               {(isCollectionsLoading ?
                 [...Array(5)]
                 :
-                collections.items).map((obj, index) =>
+                collections.items.slice(0, count)).map((obj, index) =>
                   isCollectionsLoading ? <Collection key={index} />
                     :
                     (
@@ -78,7 +85,7 @@ const Home = () => {
         </Col>
       </Row>
       <div className='d-flex justify-content-center m-3'>
-        <Button variant="primary" className='mx-4'>See more</Button>
+        <Button variant="primary" className='mx-4' onClick={() => setCount(count += 4)}>See more</Button>
       </div>
     </Container>
   )
