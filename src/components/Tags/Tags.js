@@ -2,22 +2,15 @@ import React from 'react'
 
 import './Tags.css'
 
-const Tags = () => {
+const Tags = ({ isTagsLoading, tags }) => {
+    console.log(tags)
     return (
         <div className='tags sticky'>
+            <h4 className='px-3'>Tags:</h4>
             <ul className='tags-list'>
-                <li>Tags</li>
-                <li>Cats</li>
-                <li>Tags</li>
-                <li>Whiskey</li>
-                <li>Tags</li>
-                <li>Cats</li>
-                <li>Tags</li>
-                <li>Whiskey</li>
-                <li>Tags</li>
-                <li>Cats</li>
-                <li>Tags</li>
-                <li>Whiskey</li>
+                {tags.map((obj, index) =>
+                    <li key={index}># {obj}</li>
+                )}
             </ul>
         </div>
     )
