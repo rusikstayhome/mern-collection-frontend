@@ -57,7 +57,6 @@ function Header() {
 
   const [show, setShow] = useState(false);
   const [isRegister, setRegister] = useState(false);
-  const [emailError, setEmailError] = useState('')
 
   const location = useLocation();
   const [url, setUrl] = useState(null);

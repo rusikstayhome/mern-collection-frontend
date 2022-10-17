@@ -1,4 +1,4 @@
-.home span {
+.home-tabs span {
     margin-right: 25px;
 
     font-size: 20px;
@@ -7,7 +7,7 @@
     transition: all 0.2s ease;
 }
 
-.home span:hover {
+.home-tabs span:hover {
     padding-bottom: 3px;
     border-bottom: 3px solid rgb(126, 126, 126);
     color: rgb(116, 116, 116);
@@ -15,8 +15,24 @@
     cursor: pointer;
 }
 
-.home .active {
+.home-tabs .active {
     padding-bottom: 3px;
     border-bottom: 3px solid rgb(126, 126, 126);
     color: rgb(116, 116, 116);
+}
+
+.add-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-button {
+    padding: 4px 12px;
+}
+
+@media screen and (max-width: 779px) {
+    .add-button-wrapper {
+        font-size: 14px;
+        display: block;
+    }
 }

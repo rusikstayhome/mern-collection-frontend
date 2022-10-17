@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+
 
 import axios from '../../axios'
 
@@ -28,12 +30,23 @@ const Home = () => {
   const [showItems, setShowItems] = useState(true);
   let [count, setCount] = useState(4)
 
+  const navigate = useNavigate();
+
   return (
     <Container>
-      <div className="home mb-4">
-        <span onClick={() => setShowItems(true)} className={showItems && 'active'}>Last Items</span>
-        <span onClick={() => setShowItems(false)} className={!showItems && 'active'}>Top Collections</span>
-      </div>
+      <Row>
+        <Col sm={8}>
+          <Row>
+            <Col md={8} className="home-tabs mb-4">
+              <span onClick={() => setShowItems(true)} className={showItems && 'active'}>Last Items</span>
+              <span onClick={() => setShowItems(false)} className={!showItems && 'active'}>Top Collections</span>
+            </Col>
+            <Col className='add-button-wrapper'>
+              <Button variant="success" className='add-button mb-3' onClick={() => navigate('/add-collection')}>Add Collection</Button>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
       <Row>
         <Col sm={8}>
           {showItems ? (
