@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { Link, useLocation } from 'react-router-dom'
 
-import { fetchAuth, selectIsAuth, logout } from '../../redux/slices/auth'
+import { fetchAuth, fetchRegister, selectIsAuth, logout } from '../../redux/slices/auth'
 
 import './Header.css'
 
@@ -26,17 +26,26 @@ function Header() {
     serError,
     formState: { errors, isValid } } = useForm({
       defaultValues: {
+        email: '',
         username: 'Ruslan Orlov',
-        password: 'rusian1'
+        password: 'rusian1',
       },
       mode: 'onChange'
     })
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchAuth(values));
+    // if (isRegister) {
+    //   const data = await dispatch(fetchRegister(values));
+    // }
 
-    if (!data.payload) {
+    const data = isRegister ? await dispatch(fetchRegister(values)) : await dispatch(fetchAuth(values));
+
+    if (!data.payload && !isRegister) {
       alert('Failed to login')
+    }
+
+    if (!data.payload && isRegister) {
+      alert('Failed to register');
     }
 
     if ('token' in data.payload) {
@@ -46,8 +55,9 @@ function Header() {
   }
 
 
-  const [show, setShow] = useState(false)
-  const [isRegister, setRegister] = useState(false)
+  const [show, setShow] = useState(false);
+  const [isRegister, setRegister] = useState(false);
+  const [emailError, setEmailError] = useState('')
 
   const location = useLocation();
   const [url, setUrl] = useState(null);
@@ -118,10 +128,20 @@ function Header() {
             {isRegister &&
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
+                <Form.Control type="email" placeholder="Enter email"
+                  {...register('email', { required: 'Enter email' })} />
+                {errors.email ?
+                  (
+                    <Form.Text className="text-danger">
+                      {errors.email.message}
+                    </Form.Text>
+                  ) :
+                  (
+                    <Form.Text className="text-muted">
+                      We'll never share your email with anyone else.
+                    </Form.Text>
+                  )}
+
               </Form.Group>
             }
             <Form.Group className='mb-3'>
@@ -146,7 +166,7 @@ function Header() {
                   </Form.Text>
                 ) : null}
             </Form.Group>
-            <Button variant="primary" type="submit" className="px-4">
+            <Button variant="primary" type="submit" className="px-4" disabled={!isValid}>
               Log in
             </Button>
           </Form>

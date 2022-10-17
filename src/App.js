@@ -6,13 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header/Header';
 import Home from './pages/Home/Home';
 
-import { fetchAuthMe, selectIsAuth } from './redux/slices/auth'
+import { fetchAuthMe } from './redux/slices/auth'
 
 
 
 function App() {
   const dispatch = useDispatch()
-  const isAuth = useSelector(selectIsAuth)
 
   useEffect(() => {
     dispatch(fetchAuthMe())
