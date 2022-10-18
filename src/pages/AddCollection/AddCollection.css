@@ -1,0 +1,11 @@
+.addCollection div {
+    border-radius: 5px;
+}
+
+.addCollection-img {
+    max-height: 35rem;
+    width: 100%;
+    display: block;
+    border-radius: 5px 5px;
+    object-fit: cover;
+}

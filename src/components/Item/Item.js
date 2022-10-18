@@ -1,12 +1,18 @@
 import React from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
+import { Button, Card, NavItem } from 'react-bootstrap'
 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Item.css'
 
-const Item = ({ isLoading = true, name, likes }) => {
+const Item = ({ isLoading = true, name, likes, parentCollection }) => {
+    const navigate = useNavigate()
+    const navigateToCollection = () => {
+        navigate(`/collections/${parentCollection}`);
+    }
+
     return (
         <Card style={{ maxWidth: '20rem' }} className='mb-3 item-card'>
             <div>
@@ -17,7 +23,9 @@ const Item = ({ isLoading = true, name, likes }) => {
                 <Card.Text>
                     {isLoading ? <Skeleton count={1} /> : name}
                 </Card.Text>
-                <Button variant="info">Go to collection</Button>
+                <Button variant="info"
+                    onClick={navigateToCollection}
+                >Go to collection</Button>
             </Card.Body>
         </Card >
     )

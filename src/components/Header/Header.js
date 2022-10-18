@@ -34,9 +34,6 @@ function Header() {
     })
 
   const onSubmit = async (values) => {
-    // if (isRegister) {
-    //   const data = await dispatch(fetchRegister(values));
-    // }
 
     const data = isRegister ? await dispatch(fetchRegister(values)) : await dispatch(fetchAuth(values));
 

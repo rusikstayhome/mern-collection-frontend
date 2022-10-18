@@ -27,8 +27,16 @@ const Home = () => {
     dispatch(fetchItems())
   }, []);
 
+
+
   const [showItems, setShowItems] = useState(true);
   let [count, setCount] = useState(4)
+
+  useEffect(() => {
+    setCount(4)
+  }, [showItems])
+
+  console.log(items)
 
   const navigate = useNavigate();
 
@@ -38,11 +46,12 @@ const Home = () => {
         <Col sm={8}>
           <Row>
             <Col md={8} className="home-tabs mb-4">
-              <span onClick={() => setShowItems(true)} className={showItems && 'active'}>Last Items</span>
+              <span onClick={() => setShowItems(true)}
+                className={showItems && 'active'}>Last Items</span>
               <span onClick={() => setShowItems(false)} className={!showItems && 'active'}>Top Collections</span>
             </Col>
             <Col className='add-button-wrapper'>
-              <Button variant="success" className='add-button mb-3' onClick={() => navigate('/add-collection')}>Add Collection</Button>
+              <Button variant="outline-success" className='add-button mb-3' onClick={() => navigate('/add-collection')}>Add Collection</Button>
             </Col>
           </Row>
         </Col>
@@ -66,6 +75,7 @@ const Home = () => {
                           id={obj._id}
                           name={obj.name}
                           likes={obj.likes}
+                          parentCollection={obj.parentCollection}
                         />
                       </Col>
                     )
@@ -86,6 +96,7 @@ const Home = () => {
                         description={obj.description}
                         topic={obj.topic}
                         updatedAt={obj.updatedAt}
+                        imageUrl={obj.imageUrl}
                         key={index}
                         isLoading={isCollectionsLoading} />
                     )
