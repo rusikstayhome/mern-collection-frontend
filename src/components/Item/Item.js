@@ -7,11 +7,12 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Item.css'
 
-const Item = ({ isLoading = true, name, likes, parentCollection }) => {
+const Item = ({ isLoading = true, name, likes, parentCollection, tags }) => {
     const navigate = useNavigate()
     const navigateToCollection = () => {
         navigate(`/collections/${parentCollection}`);
     }
+
 
     return (
         <Card style={{ maxWidth: '20rem' }} className='mb-3 item-card'>
@@ -23,9 +24,19 @@ const Item = ({ isLoading = true, name, likes, parentCollection }) => {
                 <Card.Text>
                     {isLoading ? <Skeleton count={1} /> : name}
                 </Card.Text>
+                <div className='item-tags'>
+                    {!isLoading && tags.map(obj => {
+                        return <span> #{obj.trim()}</span>
+                    })}
+                </div>
+                <div className='mb-2'>
+                    <i class="bi bi-heart-fill"></i>
+                    <span className='like-count'>18</span>
+                </div>
                 <Button variant="info"
                     onClick={navigateToCollection}
                 >Go to collection</Button>
+
             </Card.Body>
         </Card >
     )

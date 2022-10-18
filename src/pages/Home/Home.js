@@ -36,8 +36,6 @@ const Home = () => {
     setCount(4)
   }, [showItems])
 
-  console.log(items)
-
   const navigate = useNavigate();
 
   return (
@@ -76,6 +74,7 @@ const Home = () => {
                           name={obj.name}
                           likes={obj.likes}
                           parentCollection={obj.parentCollection}
+                          tags={obj.tags}
                         />
                       </Col>
                     )

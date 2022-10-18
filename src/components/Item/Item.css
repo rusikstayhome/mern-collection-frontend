@@ -22,3 +22,47 @@
     object-fit: cover;
     z-index: 1;
 }
+
+.item-tags {
+    margin-bottom: 5px;
+}
+
+.item-tags span {
+    margin-bottom: 20px;
+
+    color: rgb(9, 55, 123);
+    font-size: 15px;
+    opacity: 0.9;
+
+    transition: all 0.2s ease;
+}
+
+.item-tags span:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.bi-heart-fill {
+    bottom: 30px;
+    right: 33px;
+    font-size: 18px;
+    color: rgb(255 0 0);
+    opacity: 0.5;
+
+    transition: all 0.2s ease;
+}
+
+.bi-heart-fill:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.like-count {
+    margin-left: 3px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.liked {
+    opacity: 1;
+}
