@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Home from './pages/Home/Home';
 import AddCollection from './pages/AddCollection/AddCollection';
 import FullCollection from './pages/FullCollection/FullCollection';
+import FullItem from './pages/FullItem/FullItem';
 
 import { fetchAuthMe } from './redux/slices/auth'
 
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collections/:id" element={<FullCollection />} />
+        <Route path="/collections/:id/item/:itemId" element={<FullItem />} />
         <Route path="/add-collection" element={<AddCollection />} />
       </Routes>
     </>

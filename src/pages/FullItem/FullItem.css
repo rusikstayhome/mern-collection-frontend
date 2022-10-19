@@ -1,0 +1,16 @@
+.full-item__card {
+    box-shadow: 8px 8px 37px -19px rgba(66, 68, 90, 1);
+}
+
+.full-item__card div {
+    max-height: 70rem;
+}
+
+.full-item__img {
+    max-height: 30rem;
+    width: 100%;
+    display: block;
+    border-radius: 5px 5px 0 0;
+    object-fit: cover;
+    z-index: 1;
+}

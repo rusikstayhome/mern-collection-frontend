@@ -26,7 +26,7 @@ function FullCollection() {
       setIsLoading(false)
     }).catch(err => {
       console.warn(err);
-      alert(`Ошибка при получении статьи`)
+      alert(`Error getting collection`)
     })
   }, [])
 
@@ -62,13 +62,16 @@ function FullCollection() {
               <Card.Text>
                 {isLoading ? <Skeleton count={4} /> : data.description}
               </Card.Text>
-              <Button variant="info"
-              >Go to collection</Button>
             </Card.Body>
             <Card.Footer className="text-muted">{isLoading ? <Skeleton /> : data.updatedAt}</Card.Footer>
           </>
         }
       </Card >
+      <Row>
+        <Col className='add-button-wrapper'>
+          <Button variant="outline-success" className='add-button mb-3'>Add Item</Button>
+        </Col>
+      </Row>
       <Row>
         {(isLoading ?
           [...Array(4)]
@@ -87,6 +90,7 @@ function FullCollection() {
                     likes={obj.likes}
                     parentCollection={obj.parentCollection}
                     tags={obj.tags}
+                    seeMore={true}
                   />
                 </Col>
               )
