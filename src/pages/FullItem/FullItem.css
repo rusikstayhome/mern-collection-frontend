@@ -3,7 +3,6 @@
 }
 
 .full-item__card div {
-    max-height: 70rem;
 }
 
 .full-item__img {
@@ -13,4 +12,13 @@
     border-radius: 5px 5px 0 0;
     object-fit: cover;
     z-index: 1;
+}
+
+.comments-form {
+    max-width: 95%;
+}
+
+.comments-textarea {
+    max-width: 95%;
+    margin: 0 auto;
 }

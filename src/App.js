@@ -19,6 +19,8 @@ function App() {
   useEffect(() => {
     dispatch(fetchAuthMe())
   }, [])
+
+
   return (
     <>
       <Header />

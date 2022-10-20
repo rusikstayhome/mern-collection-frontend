@@ -32,6 +32,7 @@ function Collection({
             </div>
             <Card.Body>
                 <Card.Title>{isLoading ? <Skeleton /> : topic}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">Ruslan Orlov</Card.Subtitle>
                 <Card.Text>
                     {isLoading ? <Skeleton count={4} /> : description}
                 </Card.Text>

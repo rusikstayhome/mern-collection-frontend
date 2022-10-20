@@ -71,8 +71,6 @@ function Header() {
     setRegister(true);
   }
 
-  console.log(isAuth)
-
   return (
     <>
       <Navbar bg="dark" variant='dark' expand="lg" className="mb-3 header">

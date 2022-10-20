@@ -11,3 +11,7 @@
     opacity: 1;
     cursor: pointer;
 }
+
+.add-item__modal {
+    max-width: 95vw;
+}

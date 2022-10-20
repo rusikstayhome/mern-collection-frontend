@@ -3,9 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
-
-import axios from '../../axios'
-
 import Item from '../../components/Item/Item'
 import Tags from '../../components/Tags/Tags'
 import Collection from '../../components/Collection/Collection'
@@ -37,6 +34,8 @@ const Home = () => {
   }, [showItems])
 
   const navigate = useNavigate();
+
+  // console.log(items)
 
   return (
     <Container>
@@ -75,6 +74,7 @@ const Home = () => {
                           likes={obj.likes}
                           parentCollection={obj.parentCollection}
                           tags={obj.tags}
+                          userId={obj.user}
                         />
                       </Col>
                     )
