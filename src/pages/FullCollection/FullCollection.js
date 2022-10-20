@@ -3,18 +3,18 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 
-import { Button, Container, Card, Row, Col, Modal, Form } from 'react-bootstrap'
+import { Button, Container, Card, Row, Col, Modal } from 'react-bootstrap'
 
 import axios from '../../axios'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Item from "../../components/Item/Item";
+import AddItemModal from "../../components/AddItemModal/AddItemModal";
 
 
 import './FullCollection.css'
 
 function FullCollection() {
-  const inputFileRef = useRef(null);
   const { auth } = useSelector(state => state);
   const isUserLoading = auth.status === 'loading'
 
@@ -117,58 +117,7 @@ function FullCollection() {
         dialogClassName="add-item__modal"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            Add Item
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Button
-            type="submit" size="sm" variant="success"
-            className={`mb-2 me-2 ${isLoading && 'disabled'}`}
-            onClick={() => inputFileRef.current.click()}
-          >
-            Download Image
-          </Button>
-
-          <Button type="submit" size="sm" variant="danger" className='mb-2'
-          >
-            Delete Image
-          </Button>
-          <input className='d-none'
-            ref={inputFileRef} type="file"
-
-          />
-
-          <div className='addCollection'>
-            <img alt="collection img" className='addCollection-img mb-2' />
-          </div>
-          <Form.Group className="mb-3">
-            <Form.Label>Item Name</Form.Label>
-            <Form.Control
-              value={'title'}
-              placeholder="Collection Title"
-
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Tags</Form.Label>
-            <Form.Control
-              value={'tags'}
-              placeholder="Collection Title"
-
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-
-          </Form.Group>
-
-          <div className="d-flex justify-content-end">
-            <Button type="submit" className="mb-3 mt-2"
-
-            >Add Item</Button>
-          </div>
-        </Modal.Body>
+        <AddItemModal isLoading={isLoading} />
       </Modal>
     </>
   );
