@@ -97,6 +97,7 @@ const Home = () => {
                         updatedAt={obj.updatedAt}
                         imageUrl={obj.imageUrl}
                         key={index}
+                        userId={obj.user._id}
                         isLoading={isCollectionsLoading} />
                     )
                 )}

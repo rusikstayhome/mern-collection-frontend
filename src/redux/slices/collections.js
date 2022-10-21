@@ -16,6 +16,10 @@ export const fetchTags = createAsyncThunk('collections/fetchTags', async () => {
     return data;
 })
 
+export const fetchRemoveCollection = createAsyncThunk('collections/fetchRemoveCollection', async (id) => {
+    axios.delete(`/collections/${id}`)
+})
+
 const initialState = {
     collections: {
         items: [],
@@ -36,6 +40,7 @@ const collectionsSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
+        //getting collections
         [fetchCollections.pending]: (state) => {
             state.collections.status = 'loading';
         },
@@ -47,6 +52,7 @@ const collectionsSlice = createSlice({
             state.collections.items = [];
             state.collections.status = 'error';
         },
+        // getting tags
         [fetchTags.pending]: (state) => {
             state.tags.status = 'loading';
         },
@@ -54,10 +60,11 @@ const collectionsSlice = createSlice({
             state.tags.items = action.payload;
             state.tags.status = 'loaded';
         },
-        [fetchItems.rejected]: (state) => {
+        [fetchTags.rejected]: (state) => {
             state.tags.items = [];
             state.tags.status = 'error';
         },
+        // getting items
         [fetchItems.pending]: (state) => {
             state.items.status = 'loading';
         },
@@ -68,6 +75,10 @@ const collectionsSlice = createSlice({
         [fetchItems.rejected]: (state) => {
             state.items.items = [];
             state.items.status = 'error';
+        },
+        // deleting collection
+        [fetchRemoveCollection.pending]: (state, action) => {
+            state.collections.items = state.collections.items.filter(obj => obj._id !== action.meta.arg)
         },
     }
 });
