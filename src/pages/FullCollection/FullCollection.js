@@ -110,6 +110,7 @@ function FullCollection() {
                       tags={obj.tags}
                       seeMore={true}
                       userId={userId}
+                      imageUrl={obj.imageUrl}
                       collectionId={obj.parentCollection}
                     />
                   </Col>

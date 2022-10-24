@@ -94,7 +94,7 @@ const AddCollection = () => {
         <Container>
             <Button
                 type="submit" size="sm" variant="success"
-                className={`mb-2 me-2 ${loading && 'disabled'}`}
+                className={`mb-2 me-2 ${loading ? 'disabled' : ''}`}
                 onClick={() => inputFileRef.current.click()}
             >
                 Download Image

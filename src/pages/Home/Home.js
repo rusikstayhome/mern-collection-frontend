@@ -67,7 +67,6 @@ const Home = () => {
                         key={index}
                       >
                         <Item
-
                           isLoading={isItemsLoading}
                           id={obj._id}
                           name={obj.name}
@@ -75,6 +74,7 @@ const Home = () => {
                           collectionId={obj.parentCollection}
                           tags={obj.tags}
                           userId={obj.user}
+                          imageUrl={obj.imageUrl}
                         />
                       </Col>
                     )

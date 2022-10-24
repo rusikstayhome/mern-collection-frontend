@@ -30,8 +30,6 @@ const MyCollections = () => {
         dispatch(fetchCollections())
     }, []);
 
-    console.log(collections.collections.items)
-
     return (
         <Container className='d-flex justify-content-center'>
             {(isCollectionsLoading ?
@@ -41,7 +39,7 @@ const MyCollections = () => {
                     isCollectionsLoading ? <Collection key={index} />
                         :
                         (
-                            <div className='me-3'>
+                            <div className='me-3' key={index}>
                                 <Collection
                                     id={obj._id}
                                     title={obj.title}

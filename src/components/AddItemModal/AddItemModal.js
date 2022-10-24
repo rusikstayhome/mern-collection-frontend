@@ -7,7 +7,7 @@ import axios from '../../axios'
 
 import './AddItemModal.css'
 
-const AddItemModal = ({ isLoading, collectionId }) => {
+const AddItemModal = () => {
   const inputFileRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -52,13 +52,13 @@ const AddItemModal = ({ isLoading, collectionId }) => {
         name,
         tags
       }
-      const { data } = axios.post(`/collections/${id}/items`, fields);
+      const { data } = await axios.post(`/collections/${id}/items`, fields);
 
-      const itemId = data._id
+      const itemid = data._id
 
-      navigate(`/collections/${id}/item/${itemId}`);
+      navigate(`/collections/${id}/item/${itemid}`);
     } catch (err) {
-      console.warn(err);
+      console.log(err);
       alert('Item upload error!')
     }
   }
@@ -86,8 +86,8 @@ const AddItemModal = ({ isLoading, collectionId }) => {
       </Modal.Header>
       <Modal.Body>
         <Button
-          type="submit" size="sm" variant="success"
-          className={`mb-2 me-2 ${loading && 'disabled'}`}
+          size="sm" variant="success"
+          className={`mb-2 me-2 ${loading ? 'disabled' : ''}`}
           onClick={() => inputFileRef.current.click()}
         >
           Download Image
