@@ -34,7 +34,7 @@ const FullItem = () => {
 
       <Card className='mb-3 full-item__card' >
         <div>
-          {!isLoading && <img src={data.imageUrl} alt="item-img" className='full-item__img' />}
+          {!isLoading && <img src={data.imageUrl || 'https://res-console.cloudinary.com/dczl7j0b7/thumbnails/v1/image/upload/v1666638070/Q09MTEVDVElPTlMvbm8tcGhvdG8tb3ItYmxhbmstaW1hZ2UtaWNvbi1sb2FkaW5nLWltYWdlcy1vci1taXNzaW5nLWltYWdlLW1hcmstaW1hZ2Utbm90LWF2YWlsYWJsZS1vci1pbWFnZS1jb21pbmctc29vbi1zaWduLXNpbXBsZS1uYXR1cmUtc2lsaG91ZXR0ZS1pbi1mcmFtZS1pc29sYXRlZC1pbGx1c3RyYXRpb24tdmVjdG9yX3F6aXcxcw==/preview'} alt="item-img" className='full-item__img' />}
         </div>
         <Card.Body>
           <Card.Title className="text-center">{isLoading ? <Skeleton /> : data.name}</Card.Title>
