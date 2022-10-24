@@ -34,7 +34,7 @@ const FullItem = () => {
 
       <Card className='mb-3 full-item__card' >
         <div>
-          <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/94945631828bfdcf32a8ad0b79978913.png" alt="" className='full-item__img' />
+          {!isLoading && <img src={data.imageUrl} alt="item-img" className='full-item__img' />}
         </div>
         <Card.Body>
           <Card.Title className="text-center">{isLoading ? <Skeleton /> : data.name}</Card.Title>

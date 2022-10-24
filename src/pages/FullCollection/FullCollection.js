@@ -99,7 +99,7 @@ function FullCollection() {
                 <Item key={index} />
                 :
                 (
-                  <Col className='col-md-4 col-sm-6'>
+                  <Col className='col-md-4 col-6'>
                     <Item
                       key={index}
                       isLoading={isLoading}
