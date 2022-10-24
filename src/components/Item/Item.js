@@ -47,12 +47,12 @@ const Item = ({ isLoading = true, name, likes, parentCollection, tags, seeMore, 
                     {isLoading ? <Skeleton count={1} /> : name}
                 </Card.Text>
                 <div className='item-tags'>
-                    {!isLoading && tags.map(obj => {
-                        return <span> #{obj.trim()}</span>
+                    {!isLoading && tags.map((obj, index) => {
+                        return <span key={index}> #{obj.trim()}</span>
                     })}
                 </div>
                 <div className='mb-2'>
-                    <i class="bi bi-heart-fill"></i>
+                    <i className="bi bi-heart-fill"></i>
                     <span className='like-count'>{likes}</span>
                 </div>
                 {seeMore ?

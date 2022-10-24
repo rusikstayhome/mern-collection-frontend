@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
+import jwt_decode from "jwt-decode";
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -7,9 +9,11 @@ import Card from 'react-bootstrap/Card';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
+import axios from '../../axios';
 import { fetchRemoveCollection } from '../../redux/slices/collections'
 
 import './Collection.css'
+import { selectIsAuth } from '../../redux/slices/auth';
 
 function Collection({
     isLoading = true,
@@ -19,11 +23,14 @@ function Collection({
     topic,
     updatedAt,
     imageUrl,
+    username,
     userId
 }) {
     const dispatch = useDispatch()
-    const { auth } = useSelector(state => state);
-    const isUserLoading = auth.status === 'loading'
+    const isAuth = useSelector(selectIsAuth)
+
+    const [authId, setAuthId] = useState(false);
+    const [admin, setAdmin] = useState(false)
 
     const navigate = useNavigate()
     const navigateToCollection = () => {
@@ -32,20 +39,35 @@ function Collection({
 
     const onClickRemove = () => {
         if (window.confirm('Are you sure that you want to delete the collection?')) {
-            dispatch(fetchRemoveCollection(id))
+            dispatch(fetchRemoveCollection(id));
         }
 
     }
 
+    useEffect(() => {
+        axios.get('auth/me').then(res => {
+            const data = res.data.userData
+            setAdmin(Boolean(data.roles.includes('admin')));
+            setAuthId(data._id)
+        }
+        ).catch(err => {
+            console.warn(err);
+        })
+    }, [isAuth])
+
+
+
     return (
         <Card className="text-center mb-3 collection-card" style={{ maxWidth: '40rem' }} >
             <Card.Header>{isLoading ? <Skeleton /> : title}
-                <div className='collection-icons'>
-                    <i class="bi bi-trash-fill me-2 text-danger"
-                        onClick={onClickRemove}
-                    ></i>
-                    <i class="bi bi-pen-fill text-warning"></i>
-                </div>
+                {(isAuth && (admin || userId === authId)) &&
+                    <div className='collection-icons'>
+                        <i class="bi bi-trash-fill me-2 text-danger"
+                            onClick={onClickRemove}
+                        ></i>
+                        <i class="bi bi-pen-fill text-warning"></i>
+                    </div>
+                }
             </Card.Header>
             <div>
                 {imageUrl &&
@@ -55,7 +77,7 @@ function Collection({
             <Card.Body>
                 <Card.Title>{isLoading ? <Skeleton /> : topic}
                 </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Ruslan Orlov</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">{isLoading ? <Skeleton /> : username}</Card.Subtitle>
                 <Card.Text>
                     {isLoading ? <Skeleton count={4} /> : description}
                 </Card.Text>

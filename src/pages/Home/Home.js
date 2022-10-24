@@ -35,8 +35,6 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // console.log(items)
-
   return (
     <Container>
       <Row>
@@ -65,9 +63,11 @@ const Home = () => {
                     <Item key={index} />
                     :
                     (
-                      <Col className='col-6'>
+                      <Col className='col-6'
+                        key={index}
+                      >
                         <Item
-                          key={index}
+
                           isLoading={isItemsLoading}
                           id={obj._id}
                           name={obj.name}
@@ -97,6 +97,7 @@ const Home = () => {
                         updatedAt={obj.updatedAt}
                         imageUrl={obj.imageUrl}
                         key={index}
+                        username={obj.user.username}
                         userId={obj.user._id}
                         isLoading={isCollectionsLoading} />
                     )
