@@ -85,7 +85,7 @@ function Header() {
             >
               <Nav.Link><Link to="/" className={url === '/' && 'active'}>Home</Link></Nav.Link>
               <Nav.Link><Link to="/users" className={url === '/users' && 'active'}>Users</Link></Nav.Link>
-              <Nav.Link><Link to="/collections">Collections</Link></Nav.Link>
+              {isAuth && <Nav.Link><Link to="/collections" className={url === '/collections' && 'active'}>My Collections</Link></Nav.Link>}
             </Nav>
             <Nav
               className="me-3 my-2 my-lg-0"

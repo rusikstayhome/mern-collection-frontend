@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useForm } from 'react-hook-form'
 import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap'
+import { useNavigate, useParams } from "react-router-dom";
 
 import axios from '../../axios'
 
-import CustonFieldInput from "../CustomFieldInput/CustonFieldInput";
-
 import './AddItemModal.css'
 
-const AddItemModal = ({ isLoading }) => {
+const AddItemModal = ({ isLoading, collectionId }) => {
   const inputFileRef = useRef(null);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [name, setName] = useState('');
   const [tags, setTags] = useState('');
-  const [string, setString] = useState({});
+  // const [string, setString] = useState({});
 
-  const [field, setField] = useState('');
-  const [value, setValue] = useState('');
-  const [added, setAdded] = useState(false)
+  // const [field, setField] = useState('');
+  // const [value, setValue] = useState('');
+  // const [added, setAdded] = useState(false)
 
 
   const handleChangeFile = async (event) => {
@@ -41,22 +42,43 @@ const AddItemModal = ({ isLoading }) => {
     setImageUrl('')
   };
 
-  const handleAddString = (e) => {
-    e.preventDefault();
-    if (field !== null && value !== null) {
-      setString((prev) => {
-        return { ...prev, [field]: value }
-      })
-      setField('');
-      setValue('');
-      setAdded(true);
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setLoading(true);
+
+      const fields = {
+        imageUrl,
+        name,
+        tags
+      }
+      const { data } = axios.post(`/collections/${id}/items`, fields);
+
+      const itemId = data._id
+
+      navigate(`/collections/${id}/item/${itemId}`);
+    } catch (err) {
+      console.warn(err);
+      alert('Item upload error!')
     }
   }
 
-  console.log(string)
+  // const handleAddString = (e) => {
+  //   e.preventDefault();
+  //   if (field !== null && value !== null) {
+  //     setString((prev) => {
+  //       return { ...prev, [field]: value }
+  //     })
+  //     setField('');
+  //     setValue('');
+  //     setAdded(true);
+  //   }
+  // }
+
+  // console.log(string)
 
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <Modal.Header closeButton>
         <Modal.Title id="example-custom-modal-styling-title">
           Add Item
@@ -101,7 +123,7 @@ const AddItemModal = ({ isLoading }) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        {/* <Form.Group className="mb-3">
           <Form.Label>Custom Fields</Form.Label>
           <Row className="mb-2">
             <Col>
@@ -253,7 +275,7 @@ const AddItemModal = ({ isLoading }) => {
               </Row>
             </Col>
           </Row>
-        </Form.Group>
+        </Form.Group> */}
 
         <div className="d-flex justify-content-end">
           <Button type="submit" className="mb-3 mt-2"

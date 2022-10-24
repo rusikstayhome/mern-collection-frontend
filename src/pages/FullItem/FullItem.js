@@ -28,7 +28,6 @@ const FullItem = () => {
     })
   }, [])
 
-  console.log(data)
 
   return (
     <Container>
@@ -43,8 +42,8 @@ const FullItem = () => {
             {isLoading ? <Skeleton count={1} /> : data.name}
           </Card.Text>
           <div className='item-tags'>
-            {!isLoading && data.tags.map(obj => {
-              return <span> #{obj.trim()}</span>
+            {!isLoading && data.tags.map((obj, index) => {
+              return <span key={index}> #{obj.trim()}</span>
             })}
           </div>
           <div className='mb-2'>

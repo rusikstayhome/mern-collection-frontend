@@ -27,8 +27,11 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
         navigate(`/collections/${collectionId}`);
     }
 
+
+
     const navigateToItem = () => {
         navigate(`/collections/${collectionId}/item/${id}`);
+        console.log(collectionId)
     }
 
     const onClickRemove = () => {
@@ -40,7 +43,6 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
 
     }
 
-    console.log(collectionId, id)
 
     useEffect(() => {
         if (!isLoading) {

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 import { Button, Container, Card, Row, Col, Modal } from 'react-bootstrap'
+
+import { fetchItems } from '../../redux/slices/collections'
 
 import axios from '../../axios'
 import Skeleton from 'react-loading-skeleton'
@@ -15,6 +17,8 @@ import AddItemModal from "../../components/AddItemModal/AddItemModal";
 import './FullCollection.css'
 
 function FullCollection() {
+  // const dispatch = useDispatch();
+  // const { items } = useSelector(state => state.collections);
   const { auth } = useSelector(state => state);
   const isUserLoading = auth.status === 'loading'
 
@@ -40,7 +44,7 @@ function FullCollection() {
     })
   }, [])
 
-
+  // console.log(items)
 
   return (
     <>
@@ -58,15 +62,16 @@ function FullCollection() {
               }
             </span>
           </Card.Header>
-          {!isLoading ?
-            <div>
-              <img src={data.imageUrl ? data.imageUrl : ''}
-                className='collection-img'
-                alt="" />
-            </div> : ''
-          }
+
           {!hide &&
             <>
+              {!isLoading ?
+                <div>
+                  <img src={data.imageUrl ? data.imageUrl : ''}
+                    className='collection-img'
+                    alt="" />
+                </div> : ''
+              }
               <Card.Body>
                 <Card.Title>{isLoading ? <Skeleton /> : data.topic}</Card.Title>
                 <Card.Text>
@@ -105,6 +110,7 @@ function FullCollection() {
                       tags={obj.tags}
                       seeMore={true}
                       userId={userId}
+                      collectionId={obj.parentCollection}
                     />
                   </Col>
                 )
@@ -116,6 +122,7 @@ function FullCollection() {
         onHide={() => setShow(false)}
         dialogClassName="add-item__modal"
         aria-labelledby="example-custom-modal-styling-title"
+        collectionId={id}
       >
         <AddItemModal isLoading={isLoading} />
       </Modal>
