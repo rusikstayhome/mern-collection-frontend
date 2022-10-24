@@ -72,7 +72,7 @@ const Home = () => {
                           id={obj._id}
                           name={obj.name}
                           likes={obj.likes}
-                          parentCollection={obj.parentCollection}
+                          collectionId={obj.parentCollection}
                           tags={obj.tags}
                           userId={obj.user}
                         />

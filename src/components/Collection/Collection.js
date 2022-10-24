@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import jwt_decode from "jwt-decode";
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -71,7 +70,7 @@ function Collection({
             </Card.Header>
             <div>
                 {imageUrl &&
-                    <img src={imageUrl} alt="" className='collection-img' />
+                    <img src={imageUrl} alt="collection-img" className='collection-img' />
                 }
             </div>
             <Card.Body>

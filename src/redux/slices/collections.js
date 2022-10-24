@@ -19,6 +19,9 @@ export const fetchTags = createAsyncThunk('collections/fetchTags', async () => {
 export const fetchRemoveCollection = createAsyncThunk('collections/fetchRemoveCollection', async (id) => {
     axios.delete(`/collections/${id}`)
 })
+export const fetchRemoveItem = createAsyncThunk('collections/fetchRemoveItem', async (id) => {
+    axios.delete(`/items/${id}`)
+})
 
 const initialState = {
     collections: {
@@ -79,6 +82,10 @@ const collectionsSlice = createSlice({
         // deleting collection
         [fetchRemoveCollection.pending]: (state, action) => {
             state.collections.items = state.collections.items.filter(obj => obj._id !== action.meta.arg)
+        },
+        // deleting item
+        [fetchRemoveItem.pending]: (state, action) => {
+            state.items.items = state.items.items.filter(obj => obj._id !== action.meta.arg)
         },
     }
 });

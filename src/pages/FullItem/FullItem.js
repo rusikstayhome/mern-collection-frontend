@@ -48,7 +48,7 @@ const FullItem = () => {
             })}
           </div>
           <div className='mb-2'>
-            <i class="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
             <span className='like-count'>18</span>
           </div>
         </Card.Body>

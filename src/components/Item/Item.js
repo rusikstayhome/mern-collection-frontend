@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap';
 
 import axios from '../../axios'
 
@@ -8,19 +9,38 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Item.css'
+import { selectIsAuth } from '../../redux/slices/auth';
+import { fetchRemoveItem } from '../../redux/slices/collections'
 
-const Item = ({ isLoading = true, name, likes, parentCollection, tags, seeMore, id, userId, imageUrl }) => {
+
+const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, userId, imageUrl }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const isAuth = useSelector(selectIsAuth)
 
     const [user, setUser] = useState('')
 
+    const [authId, setAuthId] = useState(false);
+    const [admin, setAdmin] = useState(false)
+
     const navigateToCollection = () => {
-        navigate(`/collections/${parentCollection}`);
+        navigate(`/collections/${collectionId}`);
     }
 
     const navigateToItem = () => {
-        navigate(`/collections/${parentCollection}/item/${id}`);
+        navigate(`/collections/${collectionId}/item/${id}`);
     }
+
+    const onClickRemove = () => {
+        if (window.confirm('Are you sure that you want to delete the item?')) {
+
+
+            dispatch(fetchRemoveItem(id));
+        }
+
+    }
+
+    console.log(collectionId, id)
 
     useEffect(() => {
         if (!isLoading) {
@@ -33,6 +53,17 @@ const Item = ({ isLoading = true, name, likes, parentCollection, tags, seeMore, 
         }
     }, [])
 
+    useEffect(() => {
+        axios.get('auth/me').then(res => {
+            const data = res.data.userData
+            setAdmin(Boolean(data.roles.includes('admin')));
+            setAuthId(data._id)
+        }
+        ).catch(err => {
+            console.warn(err);
+        })
+    }, [isAuth])
+
     return (
         <Card style={{ maxWidth: '20rem' }} className='mb-3 item-card' >
             <div>
@@ -41,7 +72,16 @@ const Item = ({ isLoading = true, name, likes, parentCollection, tags, seeMore, 
                 }
             </div>
             <Card.Body>
-                <Card.Title>{isLoading ? <Skeleton /> : name}</Card.Title>
+                <Card.Title>{isLoading ? <Skeleton /> : name}
+                    {(isAuth && (admin || userId === authId)) &&
+                        <div className='collection-icons'>
+                            <i class="bi bi-trash-fill me-2 text-danger"
+                                onClick={onClickRemove}
+                            ></i>
+                            <i class="bi bi-pen-fill text-warning"></i>
+                        </div>
+                    }
+                </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted fs-6">{isLoading ? <Skeleton /> : user.username}</Card.Subtitle>
                 <Card.Text>
                     {isLoading ? <Skeleton count={1} /> : name}
