@@ -10,7 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import './Item.css'
 import { selectIsAuth } from '../../redux/slices/auth';
-import { fetchRemoveItem } from '../../redux/slices/collections'
+import { fetchRemoveItem, fetchLikeItem, fetchItems } from '../../redux/slices/collections'
 
 
 const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, userId, imageUrl }) => {
@@ -27,24 +27,20 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
         navigate(`/collections/${collectionId}`);
     }
 
-    console.log(likes)
-
     const navigateToItem = () => {
         navigate(`/collections/${collectionId}/item/${id}`);
-        console.log(collectionId)
     }
 
     const onClickRemove = () => {
         if (window.confirm('Are you sure that you want to delete the item?')) {
-
-
             dispatch(fetchRemoveItem(id));
         }
 
     }
 
-    const onClickLike = () => {
-        axios.post(`/items/${id}`)
+    const onClickLike = async () => {
+        await axios.post(`/items/${id}`)
+        dispatch(fetchItems())
     }
 
 

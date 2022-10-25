@@ -24,9 +24,7 @@ const Home = () => {
     dispatch(fetchItems())
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchItems())
-  }, [items])
+
 
 
 

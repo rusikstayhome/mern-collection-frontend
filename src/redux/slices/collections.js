@@ -22,6 +22,9 @@ export const fetchRemoveCollection = createAsyncThunk('collections/fetchRemoveCo
 export const fetchRemoveItem = createAsyncThunk('collections/fetchRemoveItem', async (id) => {
     axios.delete(`/items/${id}`)
 })
+// export const fetchLikeItem = createAsyncThunk('collections/fetchRemoveItem', async (id) => {
+//     axios.post(`/items/${id}`)
+// })
 
 const initialState = {
     collections: {
@@ -87,7 +90,13 @@ const collectionsSlice = createSlice({
         [fetchRemoveItem.pending]: (state, action) => {
             state.items.items = state.items.items.filter(obj => obj._id !== action.meta.arg)
         },
+        //liking item
+        // [fetchLikeItem.fulfilled]: (state, action) => {
+        //     state.items.items = action.payload;
+        //     state.items.status = 'loaded';
+        // },
     }
 });
 
 export const collectionsReducer = collectionsSlice.reducer;
+
