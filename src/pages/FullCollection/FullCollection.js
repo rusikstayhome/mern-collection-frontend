@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Container, Card, Row, Col, Modal } from 'react-bootstrap'
 
-import { getLikes } from '../../redux/slices/collections'
+import { getLikes, fetchOneCollections } from '../../redux/slices/collections'
 import { selectIsAuth } from '../../redux/slices/auth'
 
 import axios from '../../axios'
@@ -18,13 +18,15 @@ import AddItemModal from "../../components/AddItemModal/AddItemModal";
 import './FullCollection.css'
 
 function FullCollection() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { items } = useSelector(state => state.collections);
   const { auth } = useSelector(state => state);
+
   const isUserLoading = auth.status === 'loading'
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [likes, setLikes] = useState('');
   const [userId, setUserId] = useState('');
   const [show, setShow] = useState(false);
 
@@ -32,19 +34,21 @@ function FullCollection() {
 
   const [hide, setHide] = useState(false)
 
-
-
   useEffect(() => {
+    dispatch(fetchOneCollections(id))
     axios.get(`/collections/${id}`).then(res => {
       setData(res.data)
       setUserId(res.data.user._id)
+      setLikes(res.data.items)
       setIsLoading(false)
     }).catch(err => {
       console.warn(err);
       alert(`Error getting collection`)
     })
 
-  })
+  }, [])
+
+
 
   return (
     <>
@@ -83,12 +87,13 @@ function FullCollection() {
           }
         </Card >
         <Row>
-          {!isUserLoading && userId === auth.data.userData._id &&
+          {(!isUserLoading && userId === auth.data?.userData?._id) ?
             <Col className='add-button-wrapper'>
               <Button variant="outline-success" className='add-button mb-3'
                 onClick={() => setShow(true)}
               >Add Item</Button>
-            </Col>}
+            </Col> : ''
+          }
         </Row>
         <Row>
           {(isLoading ?

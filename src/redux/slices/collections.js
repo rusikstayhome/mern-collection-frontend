@@ -5,6 +5,10 @@ export const fetchCollections = createAsyncThunk('collections/fetchCollections',
     const { data } = await axios.get('/collections')
     return data;
 })
+export const fetchOneCollections = createAsyncThunk('collections/fetchOneCollections', async (id) => {
+    const { data } = await axios.get(`/collections${id}`)
+    return data;
+})
 
 export const fetchItems = createAsyncThunk('collections/fetchItems', async () => {
     const { data } = await axios.get('/items')
@@ -22,9 +26,9 @@ export const fetchRemoveCollection = createAsyncThunk('collections/fetchRemoveCo
 export const fetchRemoveItem = createAsyncThunk('collections/fetchRemoveItem', async (id) => {
     axios.delete(`/items/${id}`)
 })
-// export const fetchLikeItem = createAsyncThunk('collections/fetchRemoveItem', async (id) => {
-//     axios.post(`/items/${id}`)
-// })
+export const fetchLikeItem = createAsyncThunk('collections/fetchLikeItem', async (id) => {
+    axios.post(`/items/${id}`)
+})
 
 const initialState = {
     collections: {
@@ -55,6 +59,18 @@ const collectionsSlice = createSlice({
             state.collections.status = 'loaded';
         },
         [fetchCollections.rejected]: (state) => {
+            state.collections.items = [];
+            state.collections.status = 'error';
+        },
+        //getting one collection
+        [fetchOneCollections.pending]: (state) => {
+            state.collections.status = 'loading';
+        },
+        [fetchOneCollections.fulfilled]: (state, action) => {
+            state.collections.items = action.payload;
+            state.collections.status = 'loaded';
+        },
+        [fetchOneCollections.rejected]: (state) => {
             state.collections.items = [];
             state.collections.status = 'error';
         },
@@ -90,11 +106,11 @@ const collectionsSlice = createSlice({
         [fetchRemoveItem.pending]: (state, action) => {
             state.items.items = state.items.items.filter(obj => obj._id !== action.meta.arg)
         },
-        //liking item
-        // [fetchLikeItem.fulfilled]: (state, action) => {
-        //     state.items.items = action.payload;
-        //     state.items.status = 'loaded';
-        // },
+        // liking item
+        [fetchLikeItem.fulfilled]: (state, action) => {
+            state.items.items = action.payload.likes;
+            state.items.status = 'loaded';
+        },
     }
 });
 

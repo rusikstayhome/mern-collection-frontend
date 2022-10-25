@@ -1,35 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
 
 import { Container, Card, FloatingLabel, Button, Form } from "react-bootstrap";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import axios from '../../axios'
+import { fetchLikeItem } from "../../redux/slices/collections";
 
 import Comments from "../../components/Comments/Comments";
 
 import './FullItem.css'
 
 const FullItem = () => {
-
+  const dispatch = useDispatch();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [sending, setSending] = useState(false)
+  const [authId, setAuthId] = useState(false);
+  const [likes, setLikes] = useState('');
   const { id } = useParams();
   const { itemId } = useParams()
 
 
   useEffect(() => {
+    axios.get('auth/me').then(res => {
+      const data = res.data.userData
+      setAuthId(data._id)
+    }
+    ).catch(err => {
+      console.warn(err);
+    })
+  }, [])
+
+  const onClickLike = async () => {
+    setSending(true)
+    await axios.post(`/items/${itemId}`)
+    setSending(false)
+  }
+
+  useEffect(() => {
     axios.get(`/collections/${id}/items/${itemId}`).then(res => {
       setData(res.data)
+      setLikes(res.data.likes)
       setIsLoading(false)
     }).catch(err => {
       console.warn(err);
       alert(`Error getting collection`)
     })
-  }, [])
-
+  }, [sending])
 
   return (
     <Container>
@@ -49,8 +69,10 @@ const FullItem = () => {
             })}
           </div>
           <div className='mb-2'>
-            <i className="bi bi-heart-fill"></i>
-            <span className='like-count'>18</span>
+            <i className={`bi bi-heart-fill ${!isLoading && likes.includes(authId) ? 'liked' : ''}`}
+              onClick={onClickLike}
+            ></i>
+            <span className='like-count'>{likes ? likes.length : '0'}</span>
           </div>
         </Card.Body>
         <hr />
