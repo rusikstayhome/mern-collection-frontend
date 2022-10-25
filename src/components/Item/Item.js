@@ -27,7 +27,7 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
         navigate(`/collections/${collectionId}`);
     }
 
-
+    console.log(likes)
 
     const navigateToItem = () => {
         navigate(`/collections/${collectionId}/item/${id}`);
@@ -41,6 +41,10 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
             dispatch(fetchRemoveItem(id));
         }
 
+    }
+
+    const onClickLike = () => {
+        axios.post(`/items/${id}`)
     }
 
 
@@ -77,10 +81,10 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
                 <Card.Title>{isLoading ? <Skeleton /> : name}
                     {(isAuth && (admin || userId === authId)) &&
                         <div className='collection-icons'>
-                            <i class="bi bi-trash-fill me-2 text-danger"
+                            <i className="bi bi-trash-fill me-2 text-danger"
                                 onClick={onClickRemove}
                             ></i>
-                            <i class="bi bi-pen-fill text-warning"></i>
+                            <i className="bi bi-pen-fill text-warning"></i>
                         </div>
                     }
                 </Card.Title>
@@ -94,8 +98,11 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
                     })}
                 </div>
                 <div className='mb-2'>
-                    <i className="bi bi-heart-fill"></i>
-                    <span className='like-count'>{likes}</span>
+                    <i className={`bi bi-heart-fill ${likes && likes.includes(authId) ? 'liked' : ''}`}
+                        onClick={onClickLike}
+                    ></i>
+                    <span className='like-count'>{likes ? likes.length : '0'}</span>
+
                 </div>
                 {seeMore ?
                     <Button variant="info"

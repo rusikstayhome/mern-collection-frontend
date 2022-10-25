@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Container, Card, Row, Col, Modal } from 'react-bootstrap'
 
 import { fetchItems } from '../../redux/slices/collections'
+import { selectIsAuth } from '../../redux/slices/auth'
 
 import axios from '../../axios'
 import Skeleton from 'react-loading-skeleton'
@@ -19,8 +20,9 @@ import './FullCollection.css'
 function FullCollection() {
   // const dispatch = useDispatch();
   // const { items } = useSelector(state => state.collections);
+  const isAuth = useSelector(selectIsAuth);
   const { auth } = useSelector(state => state);
-  const isUserLoading = auth.status === 'loading'
+  const isUserLoading = isAuth ? auth.status === 'loading' : true
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -43,8 +45,6 @@ function FullCollection() {
       alert(`Error getting collection`)
     })
   }, [])
-
-  // console.log(items)
 
   return (
     <>

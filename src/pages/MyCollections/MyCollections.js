@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import { Container } from 'react-bootstrap'
 
@@ -29,6 +30,10 @@ const MyCollections = () => {
     useEffect(() => {
         dispatch(fetchCollections())
     }, []);
+
+    if (!window.localStorage.getItem('token')) {
+        return <Navigate to="/" />
+    }
 
     return (
         <Container className='d-flex justify-content-center'>

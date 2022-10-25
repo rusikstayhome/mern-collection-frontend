@@ -24,6 +24,10 @@ const Home = () => {
     dispatch(fetchItems())
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchItems())
+  }, [items])
+
 
 
   const [showItems, setShowItems] = useState(true);
