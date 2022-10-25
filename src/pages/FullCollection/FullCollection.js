@@ -17,16 +17,15 @@ import AddItemModal from "../../components/AddItemModal/AddItemModal";
 
 import './FullCollection.css'
 
+
+
 function FullCollection() {
-  const dispatch = useDispatch();
-  // const { items } = useSelector(state => state.collections);
   const { auth } = useSelector(state => state);
 
-  const isUserLoading = auth.status === 'loading'
+  // const isUserLoading = auth.status === 'loading'
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [likes, setLikes] = useState('');
   const [userId, setUserId] = useState('');
   const [show, setShow] = useState(false);
 
@@ -35,11 +34,9 @@ function FullCollection() {
   const [hide, setHide] = useState(false)
 
   useEffect(() => {
-    dispatch(fetchOneCollections(id))
     axios.get(`/collections/${id}`).then(res => {
       setData(res.data)
       setUserId(res.data.user._id)
-      setLikes(res.data.items)
       setIsLoading(false)
     }).catch(err => {
       console.warn(err);
@@ -47,7 +44,6 @@ function FullCollection() {
     })
 
   }, [])
-
 
 
   return (
@@ -87,7 +83,7 @@ function FullCollection() {
           }
         </Card >
         <Row>
-          {(!isUserLoading && userId === auth.data?.userData?._id) ?
+          {(!isLoading && userId === auth.data?.userData?._id) ?
             <Col className='add-button-wrapper'>
               <Button variant="outline-success" className='add-button mb-3'
                 onClick={() => setShow(true)}
