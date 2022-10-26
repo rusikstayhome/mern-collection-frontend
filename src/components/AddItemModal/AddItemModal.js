@@ -15,7 +15,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [name, setName] = useState('');
-  const [tags, setTags] = useState('');
+  const [tags, setTags] = useState([]);
   // const [string, setString] = useState({});
 
   // const [field, setField] = useState('');
@@ -42,7 +42,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
     if (isEditing) {
       axios.get(`/collections/${id}/items/${itemId}`).then(({ data }) => {
         setName(data.name);
-        setTags(data.tags);
+        setTags(data.tags.join(','));
         setImageUrl(data.imageUrl);
       }).catch(err => {
         console.log(err);
@@ -65,12 +65,12 @@ const AddItemModal = ({ isEditing, itemId }) => {
         name,
         tags
       }
+      console.log(tags)
       const { data } = isEditing
         ? await axios.patch(`/collections/${id}/items/${itemId}`, fields)
         : await axios.post(`/collections/${id}/items`, fields);
 
       const _itemid = isEditing ? itemId : data._id
-
 
       navigate(`/collections/${id}/item/${_itemid}`);
     } catch (err) {

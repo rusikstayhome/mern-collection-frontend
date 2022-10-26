@@ -2,7 +2,7 @@ import { Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from 'react-
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-
+import { BsMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { Link, useLocation } from 'react-router-dom'
 
 import { fetchAuth, fetchRegister, selectIsAuth, logout } from '../../redux/slices/auth'
@@ -87,6 +87,17 @@ function Header() {
               <Nav.Link><Link to="/users" className={url === '/users' && 'active'}>Users</Link></Nav.Link>
               {isAuth && <Nav.Link><Link to="/collections" className={url === '/collections' && 'active'}>My Collections</Link></Nav.Link>}
             </Nav>
+            <Nav>
+              <div id="darkmode">
+                <input type="checkbox" className="checkbox" id="checkbox" />
+                <label htmlFor="checkbox" className="label">
+                  <BsMoonStarsFill color="white" />
+                  <BsFillSunFill color="yellow" />
+                  <div className="ball"></div>
+                </label>
+              </div>
+            </Nav>
+
             <Nav
               className="me-3 my-2 my-lg-0"
               style={{ maxHeight: '100px' }}
@@ -99,17 +110,16 @@ function Header() {
                     <Nav.Link><Link to="/" onClick={handleShowRegister}>Register</Link></Nav.Link>
                   </>
                 )}
-
+              <Form className="d-flex">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                />
+                <Button variant="outline-success">Search</Button>
+              </Form>
             </Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar >
