@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -20,6 +20,7 @@ import './FullCollection.css'
 
 
 function FullCollection() {
+  const navigate = useNavigate();
   const { auth } = useSelector(state => state);
 
   // const isUserLoading = auth.status === 'loading'
@@ -32,6 +33,10 @@ function FullCollection() {
   const { id } = useParams();
 
   const [hide, setHide] = useState(false)
+
+  const navigateToCollectionEdit = () => {
+    navigate(`/collections/${id}/edit`);
+  }
 
   useEffect(() => {
     axios.get(`/collections/${id}`).then(res => {
@@ -85,9 +90,12 @@ function FullCollection() {
         <Row>
           {(!isLoading && userId === auth.data?.userData?._id) ?
             <Col className='add-button-wrapper'>
-              <Button variant="outline-success" className='add-button mb-3'
+              <Button variant="outline-success" className='add-button mb-3 me-2'
                 onClick={() => setShow(true)}
               >Add Item</Button>
+              <Button variant="outline-warning" className='add-button mb-3'
+                onClick={navigateToCollectionEdit}
+              >Edit Collection</Button>
             </Col> : ''
           }
         </Row>

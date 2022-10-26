@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 
 import Button from 'react-bootstrap/Button';
@@ -35,6 +35,9 @@ function Collection({
     const navigateToCollection = () => {
         navigate(`/collections/${id}`);
     }
+    const navigateToCollectionEdit = () => {
+        navigate(`/collections/${id}/edit`);
+    }
 
     const onClickRemove = () => {
         if (window.confirm('Are you sure that you want to delete the collection?')) {
@@ -64,7 +67,9 @@ function Collection({
                         <i class="bi bi-trash-fill me-2 text-danger"
                             onClick={onClickRemove}
                         ></i>
-                        <i class="bi bi-pen-fill text-warning"></i>
+                        <i class="bi bi-pen-fill text-warning"
+                            onClick={navigateToCollectionEdit}
+                        ></i>
                     </div>
                 }
             </Card.Header>

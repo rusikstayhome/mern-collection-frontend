@@ -28,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collections/:id" element={<FullCollection />} />
+        <Route path="/collections/:id/edit" element={<AddCollection />} />
         <Route path="/collections/:id/item/:itemId" element={<FullItem />} />
         <Route path="/add-collection" element={<AddCollection />} />
         <Route path="/collections" element={<MyCollections />} />

@@ -1,7 +1,7 @@
-import React, { useRef, useState, useCallback, useMemo } from 'react';
+import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import axios from '../../axios';
 
@@ -13,6 +13,7 @@ import "easymde/dist/easymde.min.css";
 import './AddCollection.css'
 
 const AddCollection = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const inputFileRef = useRef(null);
@@ -24,11 +25,25 @@ const AddCollection = () => {
     const [topic, setTopic] = useState('cars');
     const [imageUrl, setImageUrl] = useState('');
 
+    const isEditing = Boolean(id)
 
     const onChange = useCallback((value) => {
         setText(value);
     }, []);
 
+    useEffect(() => {
+        if (id) {
+            axios.get(`/collections/${id}`).then(({ data }) => {
+                setTitle(data.title);
+                setText(data.description);
+                setImageUrl(data.imageUrl);
+                setTopic(data.topic);
+            }).catch(err => {
+                console.log(err);
+                alert('Failed to get a collection')
+            })
+        }
+    }, [])
 
     const options = useMemo(
         () => ({
@@ -74,11 +89,14 @@ const AddCollection = () => {
                 topic,
                 description: text
             }
-            const { data } = await axios.post('/collections', fields);
+            const { data } = isEditing
+                ? await axios.patch(`/collections/${id}`, fields)
+                : await axios.post('/collections', fields);
 
-            const id = data._id
 
-            navigate(`/collections/${id}`);
+            const _id = isEditing ? id : data._id
+
+            navigate(`/collections/${_id}`);
         } catch (err) {
             console.warn(err);
             alert('Collection upload error!')
@@ -138,7 +156,7 @@ const AddCollection = () => {
             <div className="d-flex justify-content-end">
                 <Button type="submit" className="mb-3 mt-2"
                     onClick={onSubmit}
-                >Add Collection</Button>
+                >{isEditing ? 'Save changes' : 'Add Collection'}</Button>
             </div>
         </Container>
     )
