@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -22,8 +22,6 @@ import './FullCollection.css'
 function FullCollection() {
   const navigate = useNavigate();
   const { auth } = useSelector(state => state);
-
-  // const isUserLoading = auth.status === 'loading'
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);

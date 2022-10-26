@@ -24,10 +24,6 @@ const Home = () => {
     dispatch(fetchItems())
   }, []);
 
-
-
-
-
   const [showItems, setShowItems] = useState(true);
   let [count, setCount] = useState(4)
 
