@@ -154,6 +154,9 @@ const AddCollection = () => {
                 <SimpleMDE value={text} onChange={onChange} options={options} />
             </Form.Group>
             <div className="d-flex justify-content-end">
+                <Button className='me-2 mb-3 mt-2' variant="outline-danger"
+                    onClick={() => navigate(isEditing ? `/collections/${id}` : '/')}
+                >Cancel</Button>
                 <Button type="submit" className="mb-3 mt-2"
                     onClick={onSubmit}
                 >{isEditing ? 'Save changes' : 'Add Collection'}</Button>
