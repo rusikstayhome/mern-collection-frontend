@@ -132,7 +132,7 @@ function FullCollection() {
         onHide={() => setShow(false)}
         dialogClassName="add-item__modal"
         aria-labelledby="example-custom-modal-styling-title"
-        collectionId={id}
+      // collectionId={id}
       >
         <AddItemModal isLoading={isLoading} />
       </Modal>

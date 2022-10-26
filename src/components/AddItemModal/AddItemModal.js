@@ -7,7 +7,7 @@ import axios from '../../axios'
 
 import './AddItemModal.css'
 
-const AddItemModal = () => {
+const AddItemModal = ({ isEditing, itemId }) => {
   const inputFileRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -38,6 +38,19 @@ const AddItemModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (isEditing) {
+      axios.get(`/collections/${id}/items/${itemId}`).then(({ data }) => {
+        setName(data.name);
+        setTags(data.tags);
+        setImageUrl(data.imageUrl);
+      }).catch(err => {
+        console.log(err);
+        alert('Failed to get an item')
+      })
+    }
+  }, [])
+
   const onClickRemoveImage = () => {
     setImageUrl('')
   };
@@ -52,11 +65,14 @@ const AddItemModal = () => {
         name,
         tags
       }
-      const { data } = await axios.post(`/collections/${id}/items`, fields);
+      const { data } = isEditing
+        ? await axios.patch(`/collections/${id}/items/${itemId}`, fields)
+        : await axios.post(`/collections/${id}/items`, fields);
 
-      const itemid = data._id
+      const _itemid = isEditing ? itemId : data._id
 
-      navigate(`/collections/${id}/item/${itemid}`);
+
+      navigate(`/collections/${id}/item/${_itemid}`);
     } catch (err) {
       console.log(err);
       alert('Item upload error!')
@@ -279,7 +295,7 @@ const AddItemModal = () => {
 
         <div className="d-flex justify-content-end">
           <Button type="submit" className="mb-3 mt-2"
-          >Add Item</Button>
+          >{isEditing ? 'Save changes' : 'Add Item'}</Button>
         </div>
       </Modal.Body>
     </Form>
