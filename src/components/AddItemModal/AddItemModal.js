@@ -65,7 +65,6 @@ const AddItemModal = ({ isEditing, itemId }) => {
         name,
         tags
       }
-      console.log(tags)
       const { data } = isEditing
         ? await axios.patch(`/collections/${id}/items/${itemId}`, fields)
         : await axios.post(`/collections/${id}/items`, fields);

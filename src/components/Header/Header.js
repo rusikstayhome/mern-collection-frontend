@@ -85,8 +85,6 @@ function Header() {
     })
   }, [isAuth])
 
-  console.log(admin)
-
   return (
     <>
       <Navbar bg="dark" variant='dark' expand="lg" className="mb-3 header">

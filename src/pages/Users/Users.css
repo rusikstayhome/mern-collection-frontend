@@ -1,0 +1,23 @@
+.users-table {
+    overflow: scroll;
+}
+
+.users-role {
+    margin: 0;
+    padding: 0;
+}
+
+.users-role:hover {
+    cursor: pointer;
+}
+
+.users-role li {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 0 8px;
+    background-color: rgb(255, 255, 174);
+}
+
+.users-role .admin {
+    background-color: blue;
+}

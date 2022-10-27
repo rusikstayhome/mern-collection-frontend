@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Container, Form } from 'react-bootstrap';
+import { Table, Container, Form, Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
+import axios from '../../axios'
 import { fetchUsers } from '../../redux/slices/auth'
+
+import UsersModal from '../../components/UsersModal/UsersModal';
+
+import './Users.css'
 
 const Users = () => {
   const dispatch = useDispatch()
   const { users, status } = useSelector(state => state.auth);
 
+  const [show, setShow] = useState(false);
   const [admin, setAdmin] = useState(false)
+  const [userId, setUserId] = useState('')
+  const [authAdmin, setAuthAdmin] = useState([])
+
+  const handleShow = (id) => {
+    setShow(true);
+    setUserId(id);
+  }
+  const handleClose = () => setShow(false);
 
   const isUsersLoading = status === 'loading'
 
@@ -17,15 +31,27 @@ const Users = () => {
     dispatch(fetchUsers())
   }, [])
 
-  if (!window.localStorage.getItem('token')) {
+  useEffect(() => {
+    axios.get('auth/me').then(res => {
+      const data = res.data.userData
+      setAuthAdmin(data.roles.includes('admin'))
+    }
+    ).catch(err => {
+      console.warn(err);
+    })
+  }, [])
+
+  console.log(authAdmin)
+
+  if (!window.localStorage.getItem('token') || !authAdmin) {
     return <Navigate to="/" />
   }
 
   return (
-    <Container>
+    <Container className='users-table'>
       {isUsersLoading
         ? 'Loading...'
-        : <Table striped bordered hover size="lg">
+        : <Table striped bordered hover size="lg" >
           <thead>
             <tr>
               <th>id</th>
@@ -37,33 +63,25 @@ const Users = () => {
           <tbody>
             {users?.map((obj, index) => {
               return (
-                <tr>
+                <tr key={index} onClick={() => handleShow(obj._id)}>
                   <td>{obj._id}</td>
                   <td>{obj.email}</td>
                   <td>{obj.username}</td>
-                  <td>{obj.roles.includes('admin')
-                    ?
-                    <Form.Check
-                      type="switch"
-                      id="custom-switch"
-                      label="Admin"
-                      checked
-                      onChange={() => setAdmin(!admin)}
-                    />
-                    : <Form.Check
-                      type="switch"
-                      id="custom-switch"
-                      label="Admin"
-                      onChange={() => setAdmin(!admin)}
-                    />
-                  }</td>
+                  <td><ul className='users-role'>{obj.roles.map((role, index) =>
+                    <li key={index} className={`mb-1 me-1 ${role === 'admin' ? 'admin' : ''}`}>
+                      {role}
+                    </li>
+                  )}</ul></td>
                 </tr>
               )
             })}
           </tbody>
         </Table>
       }
-    </Container>
+      <Modal show={show} onHide={handleClose}>
+        <UsersModal userId={userId} />
+      </Modal>
+    </Container >
   );
 }
 
