@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 
 import { Button, Container, Card, Row, Col, Modal } from 'react-bootstrap'
-
-import { getLikes, fetchOneCollections } from '../../redux/slices/collections'
-import { selectIsAuth } from '../../redux/slices/auth'
 
 import axios from '../../axios'
 import Skeleton from 'react-loading-skeleton'
@@ -45,9 +41,7 @@ function FullCollection() {
       console.warn(err);
       alert(`Error getting collection`)
     })
-
   }, [])
-
 
   return (
     <>
