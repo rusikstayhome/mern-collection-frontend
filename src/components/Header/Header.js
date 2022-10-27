@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react';
 import { Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { Link, useLocation } from 'react-router-dom'
+
+import axios from '../../axios'
 
 import { fetchAuth, fetchRegister, selectIsAuth, logout } from '../../redux/slices/auth'
 
@@ -12,6 +14,8 @@ import './Header.css'
 function Header() {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
+
+  const [admin, setAdmin] = useState(false)
 
   const onClickLogout = () => {
     if (window.confirm('Are you sure that you want to logout?')) {
@@ -71,6 +75,18 @@ function Header() {
     setRegister(true);
   }
 
+  useEffect(() => {
+    axios.get('auth/me').then(res => {
+      const data = res.data.userData
+      setAdmin(Boolean(data.roles.includes('admin')));
+    }
+    ).catch(err => {
+      console.warn(err);
+    })
+  }, [isAuth])
+
+  console.log(admin)
+
   return (
     <>
       <Navbar bg="dark" variant='dark' expand="lg" className="mb-3 header">
@@ -84,7 +100,7 @@ function Header() {
               navbarScroll
             >
               <Nav.Link><Link to="/" className={url === '/' && 'active'}>Home</Link></Nav.Link>
-              <Nav.Link><Link to="/users" className={url === '/users' && 'active'}>Users</Link></Nav.Link>
+              {(isAuth && admin) && <Nav.Link><Link to="/users" className={url === '/users' && 'active'}>Users</Link></Nav.Link>}
               {isAuth && <Nav.Link><Link to="/collections" className={url === '/collections' && 'active'}>My Collections</Link></Nav.Link>}
             </Nav>
             <Nav>

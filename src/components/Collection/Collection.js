@@ -74,9 +74,9 @@ function Collection({
                 }
             </Card.Header>
             <div>
-                {imageUrl &&
-                    <img src={imageUrl} alt="collection-img" className='collection-img' />
-                }
+
+                <img src={imageUrl || 'https://res-console.cloudinary.com/dczl7j0b7/thumbnails/v1/image/upload/v1666638070/Q09MTEVDVElPTlMvbm8tcGhvdG8tb3ItYmxhbmstaW1hZ2UtaWNvbi1sb2FkaW5nLWltYWdlcy1vci1taXNzaW5nLWltYWdlLW1hcmstaW1hZ2Utbm90LWF2YWlsYWJsZS1vci1pbWFnZS1jb21pbmctc29vbi1zaWduLXNpbXBsZS1uYXR1cmUtc2lsaG91ZXR0ZS1pbi1mcmFtZS1pc29sYXRlZC1pbGx1c3RyYXRpb24tdmVjdG9yX3F6aXcxcw==/preview'} alt="collection-img" className='collection-img' />
+
             </div>
             <Card.Body>
                 <Card.Title>{isLoading ? <Skeleton /> : topic}

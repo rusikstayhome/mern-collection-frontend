@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Container, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import { fetchUsers } from '../../redux/slices/auth'
 
@@ -16,7 +17,9 @@ const Users = () => {
     dispatch(fetchUsers())
   }, [])
 
-  console.log(admin)
+  if (!window.localStorage.getItem('token')) {
+    return <Navigate to="/" />
+  }
 
   return (
     <Container>
@@ -32,7 +35,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((obj, index) => {
+            {users?.map((obj, index) => {
               return (
                 <tr>
                   <td>{obj._id}</td>
