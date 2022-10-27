@@ -64,3 +64,6 @@
 #darkmode .checkbox:checked + .label .ball {
     transform: translateX(17px);
 }
+
+@media screen and (min-width: 1024px) {
+}

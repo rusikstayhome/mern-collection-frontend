@@ -61,7 +61,7 @@ const Home = () => {
                     <Item key={index} />
                     :
                     (
-                      <Col className='col-6'
+                      <Col className='col-12 col-sm-6'
                         key={index}
                       >
                         <Item
