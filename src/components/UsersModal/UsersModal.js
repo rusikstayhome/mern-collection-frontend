@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Form, Button, Modal } from 'react-bootstrap';
 
 import axios from '../../axios'
 
 const UsersModal = ({ userId }) => {
+    const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [roles, setRoles] = useState([]);
+
+    const toMyCollections = () => {
+        navigate(`/collections/admin/${userId}`);
+    }
 
 
     useEffect(() => {
@@ -32,7 +38,7 @@ const UsersModal = ({ userId }) => {
             </Modal.Header>
 
             <Modal.Body>
-                <Button variant='outline-info' className='me-2'>See Collections</Button>
+                <Button variant='outline-info' className='me-2' onClick={toMyCollections}>See Collections</Button>
                 {roles.includes('admin')
                     ? <Button variant='danger'
                         onClick={() => setRoles(roles.filter(role => role !== 'admin'))}

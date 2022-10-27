@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -9,22 +9,31 @@ import { fetchCollections } from '../../redux/slices/collections'
 
 import Collection from '../../components/Collection/Collection'
 
-const MyCollections = () => {
+const MyCollections = ({ isAdminWatching }) => {
   const dispatch = useDispatch();
   const { collections } = useSelector(state => state)
   const isCollectionsLoading = collections.status === 'loading'
 
   const [authId, setAuthId] = useState('')
 
+  const { userId } = useParams()
+
 
   useEffect(() => {
-    axios.get('auth/me').then(res => {
-      const data = res.data.userData
-      setAuthId(data._id)
+    if (isAdminWatching) {
+      axios.get(`/users/${userId}`).then(res => {
+        const data = res.data.user
+        setAuthId(data._id)
+      })
+    } else {
+      axios.get('auth/me').then(res => {
+        const data = res.data.userData
+        setAuthId(data._id)
+      }
+      ).catch(err => {
+        console.warn(err);
+      })
     }
-    ).catch(err => {
-      console.warn(err);
-    })
   }, [])
 
   useEffect(() => {

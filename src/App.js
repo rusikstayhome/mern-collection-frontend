@@ -33,6 +33,7 @@ function App() {
         <Route path="/collections/:id/item/:itemId" element={<FullItem />} />
         <Route path="/add-collection" element={<AddCollection />} />
         <Route path="/collections" element={<MyCollections />} />
+        <Route path="/collections/admin/:userId" element={<MyCollections isAdminWatching={true} />} />
         <Route path="/users" element={<Users />} />
       </Routes>
     </>
