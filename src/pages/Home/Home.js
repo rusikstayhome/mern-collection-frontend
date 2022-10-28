@@ -97,6 +97,7 @@ const Home = () => {
                         key={index}
                         username={obj.user.username}
                         userId={obj.user._id}
+                        viewsCount={obj.viewsCount}
                         isLoading={isCollectionsLoading} />
                     )
                 )}

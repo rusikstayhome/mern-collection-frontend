@@ -12,7 +12,7 @@ import NoPhoto from '../../no-photo.jpg'
 
 import './Item.css'
 import { selectIsAuth } from '../../redux/slices/auth';
-import { fetchRemoveItem, fetchLikeItem, fetchItems } from '../../redux/slices/collections'
+import { fetchRemoveItem, fetchItems } from '../../redux/slices/collections'
 
 
 const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, userId, imageUrl }) => {

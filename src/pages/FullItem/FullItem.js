@@ -21,6 +21,8 @@ const FullItem = () => {
   const [sending, setSending] = useState(false)
   const [authId, setAuthId] = useState(false);
   const [likes, setLikes] = useState('');
+  const [comments, setComments] = useState([]);
+  const [text, setText] = useState('');
   const { id } = useParams();
   const { itemId } = useParams()
 
@@ -40,17 +42,28 @@ const FullItem = () => {
     await axios.post(`/items/${itemId}`)
     setSending(false)
   }
+  const onSubmitAddComment = async () => {
+    setSending(true);
+    const fields = {
+      text: text
+    }
+    await axios.post(`/items/${itemId}/comments`, fields)
+    setSending(false);
+  }
 
   useEffect(() => {
     axios.get(`/collections/${id}/items/${itemId}`).then(res => {
       setData(res.data)
       setLikes(res.data.likes)
       setIsLoading(false)
+      setComments(res.data.comments)
     }).catch(err => {
       console.warn(err);
       alert(`Error getting collection`)
     })
   }, [sending])
+
+  console.log(comments)
 
   return (
     <Container>
@@ -78,20 +91,29 @@ const FullItem = () => {
         </Card.Body>
         <hr />
         <h5 className='ms-3'>Comments:</h5>
-        <Comments />
-        <Comments />
-        <Form className="comments-form">
+        {comments.map((obj, index) =>
+          <Comments
+            key={index}
+            text={obj.text}
+            addedAt={obj.addedAt}
+            user={obj.user}
+          />
+        )}
+
+        <Form className="comments-form" onSubmit={onSubmitAddComment}>
           <div className="comments-textarea">
             <FloatingLabel
               controlId="floatingTextarea"
               label="Comment"
               className="mb-3"
             >
-              <Form.Control style={{ minHeight: '5rem' }} as="textarea" placeholder="Leave a comment here" className="w-100" />
+              <Form.Control style={{ minHeight: '5rem' }} as="textarea" placeholder="Leave a comment here" className="w-100"
+                onChange={(e) => setText(e.target.value)}
+              />
             </FloatingLabel>
           </div>
           <div className='d-flex justify-content-end me-4 mb-2'>
-            <Button variant="primary" className="px-5">Send</Button>
+            <Button variant="primary" className="px-5" type='submit'>Send</Button>
           </div>
 
         </Form>

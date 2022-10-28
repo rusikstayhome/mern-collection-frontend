@@ -44,3 +44,15 @@
     opacity: 1;
     cursor: pointer;
 }
+
+.collection-viewscount {
+    opacity: 0.5;
+    position: absolute;
+    left: 15px;
+    bottom: 60px;
+}
+.collection-viewscount__count {
+    position: relative;
+    left: 2px;
+    top: 4px;
+}

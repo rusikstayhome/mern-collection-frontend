@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
+import dateFormat from "dateformat";
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -24,7 +25,8 @@ function Collection({
     updatedAt,
     imageUrl,
     username,
-    userId
+    userId,
+    viewsCount
 }) {
     const dispatch = useDispatch()
     const isAuth = useSelector(selectIsAuth)
@@ -86,11 +88,12 @@ function Collection({
                 <Card.Text>
                     {isLoading ? <Skeleton count={4} /> : description}
                 </Card.Text>
+                <div className='collection-viewscount'><i className="bi bi-eye"><span className='collection-viewscount__count'>{viewsCount}</span></i></div>
                 <Button variant="info"
                     onClick={navigateToCollection}
                 >Go to collection</Button>
             </Card.Body>
-            <Card.Footer className="text-muted">{isLoading ? <Skeleton /> : updatedAt}</Card.Footer>
+            <Card.Footer className="text-muted">{isLoading ? <Skeleton /> : dateFormat(updatedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</Card.Footer>
         </Card >
     );
 }

@@ -1,17 +1,18 @@
 import React from 'react'
+import dateFormat from "dateformat";
 
 import './Comments.css'
 
-const Comments = () => {
+const Comments = ({ text, addedAt, user }) => {
   return (
     <>
       <div className='m-3'>
         <div>
-          <h6 className='m-0'>Ruslan Orlov</h6>
-          <p className='comments-date'>5 days ago</p>
+          <h6 className='m-0'>{user.username || 'Anonim'}</h6>
+          <p className='comments-date'>{dateFormat(addedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</p>
         </div>
         <p className='comments-text'>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit dolorem alias, soluta perspiciatis sapiente enim at illum non? Aliquam, voluptatem!
+          {text}
         </p>
         <hr />
       </div>

@@ -33,6 +33,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
       setImageUrl(data.image)
       setLoading(false)
     } catch (err) {
+      setLoading(false)
       console.warn(err);
       alert('File upload error!')
     }
@@ -65,6 +66,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
         name,
         tags
       }
+
       const { data } = isEditing
         ? await axios.patch(`/collections/${id}/items/${itemId}`, fields)
         : await axios.post(`/collections/${id}/items`, fields);

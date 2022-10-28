@@ -70,6 +70,7 @@ const AddCollection = () => {
             setImageUrl(data.image)
             setLoading(false)
         } catch (err) {
+            setLoading(false)
             console.warn(err);
             alert('File upload error!')
         }
@@ -147,6 +148,7 @@ const AddCollection = () => {
                     <option>Cars</option>
                     <option>Whiskey</option>
                     <option>Books</option>
+                    <option>Dogs</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group>
