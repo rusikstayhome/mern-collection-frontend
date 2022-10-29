@@ -1,3 +1,7 @@
 .add-item__modal {
     max-width: 95vw;
 }
+
+.dark-modal {
+    background-color: #272b30;
+}

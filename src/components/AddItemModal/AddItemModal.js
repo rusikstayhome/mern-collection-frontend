@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap'
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import axios from '../../axios'
 
@@ -10,6 +11,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
   const inputFileRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const theme = useSelector((state) => state.theme)
 
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
@@ -73,10 +75,11 @@ const AddItemModal = ({ isEditing, itemId }) => {
     }
   }
 
+
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} className={`${theme === 'dark' ? 'dark-modal' : ''}`}>
       <Modal.Header closeButton>
-        <Modal.Title id="example-custom-modal-styling-title">
+        <Modal.Title id="example-custom-modal-styling-title" className={theme}>
           Add Item
         </Modal.Title>
       </Modal.Header>
@@ -103,7 +106,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
             <img src={imageUrl} alt="collection img" className='addCollection-img mb-2' />
           </div>}
         <Form.Group className="mb-3">
-          <Form.Label>Item Name</Form.Label>
+          <Form.Label className={theme}>Item Name</Form.Label>
           <Form.Control
             value={name}
             placeholder="Item Title"
@@ -111,7 +114,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Tags</Form.Label>
+          <Form.Label className={theme}>Tags</Form.Label>
           <Form.Control
             value={tags}
             placeholder="Item tags"

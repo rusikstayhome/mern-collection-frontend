@@ -10,6 +10,10 @@ body {
     max-width: 1000px;
 }
 
+.dark {
+    color: white;
+}
+
 @media screen and (max-width: 1024px) {
     .container {
         max-width: 900px;

@@ -13,7 +13,7 @@ import './Home.css'
 const Home = () => {
   const dispatch = useDispatch();
   const { collections, tags, items } = useSelector(state => state.collections);
-
+  const theme = useSelector((state) => state.theme)
   const isCollectionsLoading = collections.status === 'loading'
   const isItemsLoading = collections.status === 'loading'
   const isTagsLoading = tags.status === 'loading'
@@ -54,7 +54,7 @@ const Home = () => {
       <Row>
         <Col sm={8}>
           <Row>
-            <Col md={8} className="home-tabs mb-4">
+            <Col md={8} className={`home-tabs mb-4 ${theme}`}>
               <span onClick={onClickShow}
                 className={showItems && 'active'}>Last Items</span>
               <span onClick={() => setShowItems(false)} className={!showItems && 'active'}>Top Collections</span>
@@ -123,7 +123,7 @@ const Home = () => {
         <Col sm={4} className='d-none d-sm-block'>
           {/* <Tags tags={tags.items} isLoading={isTagsLoading} /> */}
           <div className='tags sticky' >
-            <h4 className='px-3'>Tags:</h4>
+            <h4 className={`px-3 ${theme}`}>Tags:</h4>
             <ul className='tags-list'>
               {makeUniq(tags.items).map((obj, index) =>
                 <li key={index} onClick={() => onClickFilter(obj)}># {obj}</li>

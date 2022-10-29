@@ -31,6 +31,7 @@ function Collection({
 }) {
     const dispatch = useDispatch()
     const isAuth = useSelector(selectIsAuth)
+    const theme = useSelector((state) => state.theme)
 
     const [authId, setAuthId] = useState(false);
     const [admin, setAdmin] = useState(false)
@@ -64,7 +65,7 @@ function Collection({
 
 
     return (
-        <Card className="text-center mb-3 collection-card" style={{ maxWidth: '40rem' }} >
+        <Card className={`text-center mb-3 collection-card ${theme}`} style={{ maxWidth: '40rem' }} bg={theme} >
             <Card.Header>{isLoading ? <Skeleton /> : title}
                 {(isAuth && (admin || userId === authId)) &&
                     <div className='collection-icons'>

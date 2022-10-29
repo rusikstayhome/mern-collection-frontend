@@ -13,6 +13,7 @@ import './Users.css'
 const Users = () => {
   const dispatch = useDispatch()
   const { users, status } = useSelector(state => state.auth);
+  const theme = useSelector((state) => state.theme)
 
   const [show, setShow] = useState(false);
   const [admin, setAdmin] = useState(false)
@@ -46,10 +47,10 @@ const Users = () => {
   }
 
   return (
-    <Container className='users-table'>
+    <Container className={`users-table`}>
       {isUsersLoading
         ? 'Loading...'
-        : <Table striped bordered hover size="lg" >
+        : <Table striped bordered hover size="lg" variant={theme}>
           <thead>
             <tr>
               <th>id</th>

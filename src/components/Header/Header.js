@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from '../../axios'
 
 import { fetchAuth, fetchRegister, selectIsAuth, logout } from '../../redux/slices/auth'
+import { set } from '../../redux/slices/theme';
 
 import './Header.css'
 
@@ -15,12 +16,12 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
+  const theme = useSelector((state) => state.theme)
 
   const [admin, setAdmin] = useState(false)
   const [show, setShow] = useState(false);
   const [isRegister, setRegister] = useState(false);
   const [searchText, setSearchText] = useState('');
-  // const [searchResult, setSearchResult] = useState('')
 
 
   const onClickLogout = () => {
@@ -94,6 +95,16 @@ function Header() {
     axios.post(`/items/search`, fields).then(res => navigate(`/items/search`, { state: res.data }))
   }
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const handleChange = () => {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    dispatch(set(next))
+  }
+
   return (
     <>
       <Navbar bg="dark" variant='dark' expand="lg" className="mb-3 header">
@@ -112,10 +123,12 @@ function Header() {
             </Nav>
             <Nav>
               <div id="darkmode">
-                <input type="checkbox" className="checkbox" id="checkbox" />
+                <input type="checkbox" className="checkbox" id="checkbox"
+                  onChange={handleChange}
+                />
                 <label htmlFor="checkbox" className="label">
                   <BsMoonStarsFill color="white" />
-                  <BsFillSunFill color="yellow" />
+                  <BsFillSunFill color="yellow" onClick={handleChange} />
                   <div className="ball"></div>
                 </label>
               </div>

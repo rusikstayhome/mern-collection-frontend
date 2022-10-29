@@ -18,6 +18,7 @@ const AddCollection = () => {
 
     const inputFileRef = useRef(null);
     const isAuth = useSelector(selectIsAuth);
+    const theme = useSelector((state) => state.theme)
 
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState('');
@@ -132,7 +133,7 @@ const AddCollection = () => {
                     <img src={imageUrl} alt="collection img" className='addCollection-img mb-2' />
                 </div>}
             <Form.Group className="mb-3">
-                <Form.Label>Collection Title</Form.Label>
+                <Form.Label className={theme}>Collection Title</Form.Label>
                 <Form.Control
                     value={title}
                     placeholder="Collection Title"
@@ -140,7 +141,7 @@ const AddCollection = () => {
                 />
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label>Collection Topic</Form.Label>
+                <Form.Label className={theme}>Collection Topic</Form.Label>
                 <Form.Select
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
@@ -152,7 +153,7 @@ const AddCollection = () => {
                 </Form.Select>
             </Form.Group>
             <Form.Group>
-                <Form.Label>Collection description</Form.Label>
+                <Form.Label className={theme}>Collection description</Form.Label>
                 <SimpleMDE value={text} onChange={onChange} options={options} />
             </Form.Group>
             <div className="d-flex justify-content-end">

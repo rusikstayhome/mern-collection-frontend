@@ -19,6 +19,7 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isAuth = useSelector(selectIsAuth)
+    const theme = useSelector((state) => state.theme)
 
     const [user, setUser] = useState('')
     const [authId, setAuthId] = useState(false);
@@ -73,11 +74,9 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
     return (
 
         <>
-            <Card style={{ maxWidth: '20rem' }} className='mb-3 item-card' >
+            <Card style={{ maxWidth: '20rem' }} className={`mb-3 item-card ${theme}`} bg={theme}>
                 <div>
-
                     <img src={imageUrl || NoPhoto} alt="" className='item-img' />
-
                 </div>
                 <Card.Body>
                     <Card.Title>{isLoading ? <Skeleton /> : name}

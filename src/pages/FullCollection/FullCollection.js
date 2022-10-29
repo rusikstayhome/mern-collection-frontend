@@ -20,6 +20,7 @@ import './FullCollection.css'
 function FullCollection() {
   const navigate = useNavigate();
   const { auth } = useSelector(state => state);
+  const theme = useSelector((state) => state.theme)
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +57,7 @@ function FullCollection() {
   return (
     <>
       <Container>
-        <Card className="text-center mb-3 collection-card" >
+        <Card className={`text-center mb-3 collection-card ${theme}`} bg={theme}>
           <Card.Header onClick={() => setHide(!hide)}>{isLoading ? <Skeleton /> : data.title}
             <span className="hide-icon"
             >

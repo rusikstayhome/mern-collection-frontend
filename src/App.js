@@ -18,6 +18,10 @@ import { fetchAuthMe } from './redux/slices/auth'
 
 function App() {
   const dispatch = useDispatch()
+  const theme = useSelector((state) => state.theme)
+
+  document.body.style.backgroundColor = theme === 'dark' ? "rgb(33,37,41, 0.98)" : 'white';
+
 
   useEffect(() => {
     dispatch(fetchAuthMe())

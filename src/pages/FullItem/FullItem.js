@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Container, Card, FloatingLabel, Button, Form } from "react-bootstrap";
 import Skeleton from 'react-loading-skeleton'
@@ -16,6 +16,7 @@ import './FullItem.css'
 
 const FullItem = () => {
   const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme)
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [sending, setSending] = useState(false)
@@ -63,12 +64,10 @@ const FullItem = () => {
     })
   }, [sending])
 
-  console.log(comments)
-
   return (
     <Container>
 
-      <Card className='mb-3 full-item__card' >
+      <Card className={`mb-3 full-item__card ${theme}`} bg={theme}>
         <div>
           {!isLoading && <img src={data.imageUrl || NoPhoto} alt="item-img" className='full-item__img' />}
         </div>
