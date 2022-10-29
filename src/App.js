@@ -10,6 +10,7 @@ import FullCollection from './pages/FullCollection/FullCollection';
 import FullItem from './pages/FullItem/FullItem';
 import MyCollections from './pages/MyCollections/MyCollections';
 import Users from './pages/Users/Users';
+import SearchResult from './pages/SearchResult/SearchResult';
 
 import { fetchAuthMe } from './redux/slices/auth'
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/collections" element={<MyCollections />} />
         <Route path="/collections/admin/:userId" element={<MyCollections isAdminWatching={true} />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/items/search" element={<SearchResult />} />
       </Routes>
     </>
   );

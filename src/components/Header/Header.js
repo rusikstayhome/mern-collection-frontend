@@ -3,7 +3,7 @@ import { Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from 'react-
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { BsMoonStarsFill, BsFillSunFill } from "react-icons/bs";
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import axios from '../../axios'
 
@@ -12,6 +12,7 @@ import { fetchAuth, fetchRegister, selectIsAuth, logout } from '../../redux/slic
 import './Header.css'
 
 function Header() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
@@ -90,7 +91,7 @@ function Header() {
     const fields = {
       text: searchText
     };
-    axios.post(`/items/search`, fields).then(res => console.log(res.data))
+    axios.post(`/items/search`, fields).then(res => navigate(`/items/search`, { state: res.data }))
   }
 
   return (
