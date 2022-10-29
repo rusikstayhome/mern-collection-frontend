@@ -16,6 +16,11 @@ function Header() {
   const isAuth = useSelector(selectIsAuth);
 
   const [admin, setAdmin] = useState(false)
+  const [show, setShow] = useState(false);
+  const [isRegister, setRegister] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  // const [searchResult, setSearchResult] = useState('')
+
 
   const onClickLogout = () => {
     if (window.confirm('Are you sure that you want to logout?')) {
@@ -27,7 +32,6 @@ function Header() {
   const {
     register,
     handleSubmit,
-    serError,
     formState: { errors, isValid } } = useForm({
       defaultValues: {
         email: '',
@@ -55,10 +59,6 @@ function Header() {
     }
   }
 
-
-  const [show, setShow] = useState(false);
-  const [isRegister, setRegister] = useState(false);
-
   const location = useLocation();
   const [url, setUrl] = useState(null);
   useEffect(() => {
@@ -84,6 +84,14 @@ function Header() {
       console.warn(err);
     })
   }, [isAuth])
+
+  const onSearchSubmit = (e) => {
+    e.preventDefault()
+    const fields = {
+      text: searchText
+    };
+    axios.post(`/items/search`, fields).then(res => console.log(res.data))
+  }
 
   return (
     <>
@@ -125,14 +133,15 @@ function Header() {
                     <Nav.Link><Link to="/" onClick={handleShowRegister}>Register</Link></Nav.Link>
                   </>
                 )}
-              <Form className="d-flex">
+              <Form className="d-flex" onSubmit={(e) => onSearchSubmit(e)} >
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  onChange={(e) => setSearchText(e.target.value)}
                 />
-                <Button variant="outline-success">Search</Button>
+                <Button variant="outline-success" type="submit">Search</Button>
               </Form>
             </Nav>
           </Navbar.Collapse>

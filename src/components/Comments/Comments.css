@@ -5,3 +5,8 @@
 .comments-text {
     font-size: 14px;
 }
+
+.comments-icon {
+    right: 20px;
+    position: absolute;
+}

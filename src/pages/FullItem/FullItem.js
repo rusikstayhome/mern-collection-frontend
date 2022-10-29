@@ -97,6 +97,8 @@ const FullItem = () => {
             text={obj.text}
             addedAt={obj.addedAt}
             user={obj.user}
+            id={obj._id}
+            itemId={itemId}
           />
         )}
 

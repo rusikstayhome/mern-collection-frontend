@@ -26,6 +26,7 @@ const Home = () => {
 
   const [showItems, setShowItems] = useState(true);
   let [count, setCount] = useState(4)
+  const [filterTag, setFilterTag] = useState('');
 
   useEffect(() => {
     setCount(4)
@@ -33,13 +34,28 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const makeUniq = (arr) => {
+    const uniqSet = new Set(arr);
+    return [...uniqSet];
+  }
+
+  const onClickShow = () => {
+    setShowItems(true);
+    setFilterTag('');
+  }
+
+  const onClickFilter = (obj) => {
+    setShowItems(true);
+    setFilterTag(obj);
+  }
+
   return (
     <Container>
       <Row>
         <Col sm={8}>
           <Row>
             <Col md={8} className="home-tabs mb-4">
-              <span onClick={() => setShowItems(true)}
+              <span onClick={onClickShow}
                 className={showItems && 'active'}>Last Items</span>
               <span onClick={() => setShowItems(false)} className={!showItems && 'active'}>Top Collections</span>
             </Col>
@@ -56,7 +72,7 @@ const Home = () => {
               {(isItemsLoading ?
                 [...Array(4)]
                 :
-                items.items.slice(0, count)).map((obj, index) =>
+                items.items.filter(obj => filterTag ? obj.tags.includes(filterTag) : obj).slice(0, count)).map((obj, index) =>
                   isItemsLoading ?
                     <Item key={index} />
                     :
@@ -105,7 +121,15 @@ const Home = () => {
           }
         </Col>
         <Col sm={4} className='d-none d-sm-block'>
-          <Tags tags={tags.items} isLoading={isTagsLoading} />
+          {/* <Tags tags={tags.items} isLoading={isTagsLoading} /> */}
+          <div className='tags sticky' >
+            <h4 className='px-3'>Tags:</h4>
+            <ul className='tags-list'>
+              {makeUniq(tags.items).map((obj, index) =>
+                <li key={index} onClick={() => onClickFilter(obj)}># {obj}</li>
+              )}
+            </ul>
+          </div >
         </Col>
       </Row>
       <div className='d-flex justify-content-center m-3'>

@@ -41,8 +41,6 @@ const Users = () => {
     })
   }, [])
 
-  console.log(authAdmin)
-
   if (!window.localStorage.getItem('token') || !authAdmin) {
     return <Navigate to="/" />
   }
