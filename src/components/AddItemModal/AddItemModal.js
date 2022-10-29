@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useForm } from 'react-hook-form'
 import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap'
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -16,12 +15,6 @@ const AddItemModal = ({ isEditing, itemId }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [name, setName] = useState('');
   const [tags, setTags] = useState([]);
-  // const [string, setString] = useState({});
-
-  // const [field, setField] = useState('');
-  // const [value, setValue] = useState('');
-  // const [added, setAdded] = useState(false)
-
 
   const handleChangeFile = async (event) => {
     try {
@@ -80,20 +73,6 @@ const AddItemModal = ({ isEditing, itemId }) => {
     }
   }
 
-  // const handleAddString = (e) => {
-  //   e.preventDefault();
-  //   if (field !== null && value !== null) {
-  //     setString((prev) => {
-  //       return { ...prev, [field]: value }
-  //     })
-  //     setField('');
-  //     setValue('');
-  //     setAdded(true);
-  //   }
-  // }
-
-  // console.log(string)
-
   return (
     <Form onSubmit={onSubmit}>
       <Modal.Header closeButton>
@@ -127,7 +106,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
           <Form.Label>Item Name</Form.Label>
           <Form.Control
             value={name}
-            placeholder="Collection Title"
+            placeholder="Item Title"
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
@@ -135,165 +114,10 @@ const AddItemModal = ({ isEditing, itemId }) => {
           <Form.Label>Tags</Form.Label>
           <Form.Control
             value={tags}
-            placeholder="Collection Title"
+            placeholder="Item tags"
             onChange={(e) => setTags(e.target.value)}
           />
         </Form.Group>
-
-        {/* <Form.Group className="mb-3">
-          <Form.Label>Custom Fields</Form.Label>
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-                placeholder="Property"
-                onChange={(e) => setField(e.target.value)}
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                placeholder="Value"
-                name={field}
-                onChange={(e) => setValue(e.target.value)}
-              />
-            </Col>
-            <Col>
-              <Button type="submit"
-                onClick={handleAddString}>Add</Button>
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-                placeholder="Property"
-                onChange={(e) => setField(e.target.value)}
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                placeholder="Value"
-                name={field}
-                onChange={(e) => setValue(e.target.value)}
-              />
-            </Col>
-            <Col>
-              <Button type="submit"
-                onClick={handleAddString}>Add</Button>
-            </Col>
-          </Row>
-        </Form.Group>
-        <hr />
-        <Form.Group className="mb-3">
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-
-                placeholder="Property"
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                as="textarea" rows={1}
-                placeholder="Value"
-              />
-            </Col>
-          </Row>
-        </Form.Group>
-        <hr />
-        <Form.Group className="mb-3">
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-
-                placeholder="Property"
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                type="date"
-              />
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-
-                placeholder="Property"
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                type="date"
-              />
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            <Col>
-              <Form.Control
-
-                placeholder="Property"
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                type="date"
-              />
-            </Col>
-          </Row>
-        </Form.Group>
-        <hr />
-        <Form.Group className="mb-3">
-          <Row>
-            <Col>
-              <Row className="mb-2">
-                <Col>
-                  <Form.Control
-
-                    placeholder="Property"
-                  />
-                </Col>
-                <Col>
-                  <Form.Check
-                    type="checkbox"
-                    className="mt-1"
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col>
-              <Row className="mb-2">
-                <Col>
-                  <Form.Control
-
-                    placeholder="Property"
-                  />
-                </Col>
-                <Col>
-                  <Form.Check
-                    type="checkbox"
-                    className="mt-1"
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col>
-              <Row className="mb-2">
-                <Col>
-                  <Form.Control
-
-                    placeholder="Property"
-                  />
-                </Col>
-                <Col>
-                  <Form.Check
-                    type="checkbox"
-                    className="mt-1"
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Form.Group> */}
-
         <div className="d-flex justify-content-end">
           <Button type="submit" className="mb-3 mt-2"
           >{isEditing ? 'Save changes' : 'Add Item'}</Button>

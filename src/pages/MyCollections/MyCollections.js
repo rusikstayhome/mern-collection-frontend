@@ -58,6 +58,7 @@ const MyCollections = ({ isAdminWatching }) => {
                   (
                     <Col md={6} xs={12} key={index}>
                       < Collection
+                        viewsCount={obj.viewsCount}
                         id={obj._id}
                         title={obj.title}
                         description={obj.description}
