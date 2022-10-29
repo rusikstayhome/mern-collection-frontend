@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import ReactMarkdown from 'react-markdown'
 
 import { Button, Container, Card, Row, Col, Modal, Form } from 'react-bootstrap'
 
@@ -81,7 +82,9 @@ function FullCollection() {
               <Card.Body>
                 <Card.Title>{isLoading ? <Skeleton /> : data.topic}</Card.Title>
                 <Card.Text>
-                  {isLoading ? <Skeleton count={4} /> : data.description}
+                  {isLoading ? <Skeleton count={4} />
+                    : <ReactMarkdown children={data.description}></ReactMarkdown>
+                  }
                 </Card.Text>
               </Card.Body>
               <Card.Footer className="text-muted">{isLoading ? <Skeleton /> : data.updatedAt}</Card.Footer>

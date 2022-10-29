@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import dateFormat from "dateformat";
+import ReactMarkdown from 'react-markdown'
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -86,7 +87,7 @@ function Collection({
                 </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">{isLoading ? <Skeleton /> : username}</Card.Subtitle>
                 <Card.Text>
-                    {isLoading ? <Skeleton count={4} /> : description}
+                    {isLoading ? <Skeleton count={4} /> : <ReactMarkdown children={description.length > 29 ? `${description.slice(0, 30)}...` : description}></ReactMarkdown>}
                 </Card.Text>
                 <div className='collection-viewscount'><i className="bi bi-eye"><span className='collection-viewscount__count'>{viewsCount}</span></i></div>
                 <Button variant="info"
