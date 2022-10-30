@@ -29,6 +29,9 @@ function FullCollection() {
   const [show, setShow] = useState(false);
   const [showFields, setShowFields] = useState(false);
   const [stringFields, setStringFields] = useState([''])
+  const [textFields, setTextFields] = useState([''])
+  const [numberFields, setNumberFields] = useState([''])
+  const [dateFields, setDateFields] = useState([''])
 
 
   const [value, setValue] = useState('')
@@ -58,15 +61,33 @@ function FullCollection() {
     setValue('')
   }
 
+  const addTextField = () => {
+    setTextFields([...textFields, value])
+    setValue('')
+  }
+
+  const addNumberField = () => {
+    setNumberFields([...numberFields, value])
+    setValue('')
+  }
+
+  const addDateField = () => {
+    setDateFields([...dateFields, value])
+    setValue('')
+  }
+
   const onSubmit = () => {
     const fields = {
-      stringFields: stringFields
+      stringFields: stringFields,
+      textFields: textFields,
+      numberFields: numberFields,
+      dateFields: dateFields
     }
 
     axios.patch(`/collections/${id}/attributes`, fields)
   }
 
-  console.log(stringFields, value)
+  // console.log(textFields, value)
 
   return (
     <>
@@ -112,9 +133,9 @@ function FullCollection() {
               <Button variant="success" className='add-button mb-3 me-2'
                 onClick={() => setShow(true)}
               >Add Item</Button>
-              {/* <Button variant="outline-info" className='add-button mb-3 me-2'
+              <Button variant="outline-info" className='add-button mb-3 me-2'
                 onClick={() => setShowFields(true)}
-              >Add Fields</Button> */}
+              >Add Fields</Button>
               <Button variant="outline-warning" className='add-button mb-3'
                 onClick={navigateToCollectionEdit}
               >Edit Collection</Button>
@@ -163,21 +184,22 @@ function FullCollection() {
         dialogClassName="add-item__modal"
         aria-labelledby="example-custom-modal-styling-title"
 
+
       >
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit} className={`${theme === 'dark' ? 'dark-modal' : ''}`}>
           <Modal.Header closeButton>
-            <Modal.Title id="example-custom-modal-styling-title">
+            <Modal.Title id="example-custom-modal-styling-title" className={theme}>
               Add Custom Fields
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Label>String Fields</Form.Label>
+            <Form.Label className={theme}>String Fields</Form.Label>
             <Form.Group className='mb-3'>
               {
                 stringFields.map((obj, index) =>
                   <div key={index} className='d-flex w-75 mb-3'>
                     <Form.Control
-                      placeholder="Custom Fields"
+                      placeholder="Type a name of the field"
                       onChange={(e) => setValue(e.target.value)}
                     />
                     <Button className='ms-2 px-4'
@@ -186,8 +208,59 @@ function FullCollection() {
                   </div>
                 )
               }
-
             </Form.Group>
+
+            <Form.Label className={theme}>Text Fields</Form.Label>
+            <Form.Group className='mb-3'>
+              {
+                textFields.map((obj, index) =>
+                  <div key={index} className='d-flex w-75 mb-3'>
+                    <Form.Control
+                      placeholder="Type a name of the field"
+                      onChange={(e) => setValue(e.target.value)}
+                    />
+                    <Button className='ms-2 px-4'
+                      onClick={() => addTextField()}
+                    >Add</Button>
+                  </div>
+                )
+              }
+            </Form.Group>
+
+            <Form.Label className={theme}>Number Fields</Form.Label>
+            <Form.Group className='mb-3'>
+              {
+                numberFields.map((obj, index) =>
+                  <div key={index} className='d-flex w-75 mb-3'>
+                    <Form.Control
+                      placeholder="Type a name of the field"
+                      onChange={(e) => setValue(e.target.value)}
+                    />
+                    <Button className='ms-2 px-4'
+                      onClick={() => addNumberField()}
+                    >Add</Button>
+                  </div>
+                )
+              }
+            </Form.Group>
+
+            <Form.Label className={theme}>Date Fields</Form.Label>
+            <Form.Group className='mb-3'>
+              {
+                dateFields.map((obj, index) =>
+                  <div key={index} className='d-flex w-75 mb-3'>
+                    <Form.Control
+                      placeholder="Type a name of the field"
+                      onChange={(e) => setValue(e.target.value)}
+                    />
+                    <Button className='ms-2 px-4'
+                      onClick={() => addDateField()}
+                    >Add</Button>
+                  </div>
+                )
+              }
+            </Form.Group>
+
             <Button type='submit'>Add Fields</Button>
           </Modal.Body>
         </Form>

@@ -23,6 +23,10 @@ const FullItem = () => {
   const [authId, setAuthId] = useState(false);
   const [likes, setLikes] = useState('');
   const [comments, setComments] = useState([]);
+  const [stringFields, setStringFields] = useState('')
+  const [textFields, setTextFields] = useState('')
+  const [numberFields, setNumberFields] = useState('')
+  const [dateFields, setDateFields] = useState('')
   const [text, setText] = useState('');
   const { id } = useParams();
   const { itemId } = useParams()
@@ -58,11 +62,17 @@ const FullItem = () => {
       setLikes(res.data.likes)
       setIsLoading(false)
       setComments(res.data.comments)
+      setStringFields(res.data.stringAttributes)
+      setTextFields(res.data.textAttributes)
+      setNumberFields(res.data.numberAttributes)
+      setDateFields(res.data.dateAttributes)
     }).catch(err => {
       console.warn(err);
       alert(`Error getting collection`)
     })
   }, [sending])
+
+  // console.log(Boolean(dateFields))
 
   return (
     <Container>
@@ -76,6 +86,46 @@ const FullItem = () => {
           <Card.Text>
             {isLoading ? <Skeleton count={1} /> : data.name}
           </Card.Text>
+
+          {Boolean(stringFields[0]) ?
+            <>
+              {Object.keys(stringFields[0]).map((obj, index) =>
+                <Card.Text>
+                  {isLoading ? <Skeleton count={1} /> : `${obj}: ${stringFields[0][obj]}`}
+                </Card.Text>
+              )}
+            </> : ''
+          }
+
+          {Boolean(dateFields[0]) ?
+            <>
+              {Object.keys(dateFields[0]).map((obj, index) =>
+                <Card.Text>
+                  {isLoading ? <Skeleton count={1} /> : `${obj}: ${dateFields[0][obj]}`}
+                </Card.Text>
+              )}
+            </> : ''
+          }
+
+          {Boolean(numberFields[0]) ?
+            <>
+              {Object.keys(numberFields[0]).map((obj, index) =>
+                <Card.Text>
+                  {isLoading ? <Skeleton count={1} /> : `${obj}: ${numberFields[0][obj]}`}
+                </Card.Text>
+              )}
+            </> : ''
+          }
+
+          {Boolean(textFields[0]) ?
+            <>
+              {Object.keys(textFields[0]).map((obj, index) =>
+                <Card.Text>
+                  {isLoading ? <Skeleton count={1} /> : `${obj}: ${textFields[0][obj]}`}
+                </Card.Text>
+              )}
+            </> : ''
+          }
           <div className='item-tags'>
             {!isLoading && data.tags.map((obj, index) => {
               return <span key={index}> #{obj.trim()}</span>

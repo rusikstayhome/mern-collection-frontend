@@ -17,6 +17,11 @@ const AddItemModal = ({ isEditing, itemId, fields }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [name, setName] = useState('');
   const [tags, setTags] = useState([]);
+  const [stringFields, setStringFields] = useState({})
+  const [textFields, setTextFields] = useState({})
+  const [numberFields, setNumberFields] = useState({})
+  const [dateFields, setDateFields] = useState({})
+  const [value, setValue] = useState('')
 
   const handleChangeFile = async (event) => {
     try {
@@ -59,7 +64,11 @@ const AddItemModal = ({ isEditing, itemId, fields }) => {
       const fields = {
         imageUrl,
         name,
-        tags
+        tags,
+        stringFields,
+        dateFields,
+        numberFields,
+        textFields
       }
 
       const { data } = isEditing
@@ -75,8 +84,37 @@ const AddItemModal = ({ isEditing, itemId, fields }) => {
     }
   }
 
-  // console.log(fields[0])
+  const addStringField = (e, obj) => {
+    setStringFields({
+      ...stringFields,
+      [obj]: e.target.value
+    })
+    setValue('')
+  }
 
+  const addTextField = (e, obj) => {
+    setTextFields({
+      ...textFields,
+      [obj]: e.target.value
+    })
+    setValue('')
+  }
+
+  const addNumberField = (e, obj) => {
+    setNumberFields({
+      ...numberFields,
+      [obj]: e.target.value
+    })
+    setValue('')
+  }
+
+  const addDateField = (e, obj) => {
+    setDateFields({
+      ...dateFields,
+      [obj]: e.target.value
+    })
+    setValue('')
+  }
 
   return (
     <Form onSubmit={onSubmit} className={`${theme === 'dark' ? 'dark-modal' : ''}`}>
@@ -125,11 +163,89 @@ const AddItemModal = ({ isEditing, itemId, fields }) => {
         </Form.Group>
         <hr className={theme} />
 
+        {
+          (!isEditing && fields.length)
+            ? <Form.Group className="mb-2">
+              {fields[0].stringAttributes.map((obj, index) => {
+                if (obj !== '') {
+                  return <div key={index}>
+                    <Form.Label className={theme}>{obj}</Form.Label>
+                    <Form.Control
+                      placeholder={obj}
+                      name={obj}
+                      onChange={(e) => addStringField(e, obj)}
+                    />
+                  </div>
+                }
+              })}
+            </Form.Group>
+            : ''
+        }
+
+        {/* <hr className={theme} /> */}
+
+        {
+          (!isEditing && fields.length)
+            ? <Form.Group className="mb-2">
+              {fields[0].dateAttributes.map((obj, index) => {
+                if (obj !== '') {
+                  return <div key={index}>
+                    <Form.Label className={theme}>{obj}</Form.Label>
+                    <Form.Control
+                      placeholder={obj}
+                      name={obj}
+                      type="date"
+                      onChange={(e) => addDateField(e, obj)}
+                    />
+                  </div>
+                }
+              })}
+            </Form.Group>
+            : ''
+        }
 
 
+        {
+          (!isEditing && fields.length)
+            ? <Form.Group className="mb-2">
+              {fields[0].textAttributes.map((obj, index) => {
+                if (obj !== '') {
+                  return <div key={index}>
+                    <Form.Label className={theme}>{obj}</Form.Label>
+                    <Form.Control
+                      placeholder={obj}
+                      name={obj}
+                      as="textarea"
+                      onChange={(e) => addTextField(e, obj)}
+                    />
+                  </div>
+                }
+              })}
+            </Form.Group>
+            : ''
+        }
+
+        {
+          (!isEditing && fields.length)
+            ? <Form.Group className="mb-2">
+              {fields[0].numberAttributes.map((obj, index) => {
+                if (obj !== '') {
+                  return <div key={index}>
+                    <Form.Label className={theme}>{obj}</Form.Label>
+                    <Form.Control
+                      placeholder={obj}
+                      name={obj}
+                      onChange={(e) => addNumberField(e, obj)}
+                    />
+                  </div>
+                }
+              })}
+            </Form.Group>
+            : ''
+        }
 
         <div className="d-flex justify-content-end">
-          <Button type="submit" className="mb-3 mt-2"
+          <Button type="submit" className="mb-3 mt-3"
           >{isEditing ? 'Save changes' : 'Add Item'}</Button>
         </div>
       </Modal.Body>
