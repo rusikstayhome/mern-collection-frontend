@@ -147,7 +147,7 @@ const AddCollection = () => {
                     onChange={(e) => setTopic(e.target.value)}
                 >
                     <option>Cars</option>
-                    <option>Whiskey</option>
+                    <option>Photos</option>
                     <option>Books</option>
                     <option>Dogs</option>
                 </Form.Select>
