@@ -1,6 +1,9 @@
 .users-table {
     overflow: scroll;
 }
+.user-table:hover {
+    cursor: pointer;
+}
 
 .users-role {
     margin: 0;

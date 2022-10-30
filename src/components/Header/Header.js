@@ -136,14 +136,7 @@ function Header() {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              {isAuth ? <Nav.Link className='text-danger' onClick={onClickLogout}>Log out</Nav.Link> :
-                (
-                  <>
-                    <Nav.Link><Link to="/" onClick={handleShow}>Log in</Link></Nav.Link>
-                    <Nav.Link><Link to="/" onClick={handleShowRegister}>Register</Link></Nav.Link>
-                  </>
-                )}
-              <Form className="d-flex" onSubmit={(e) => onSearchSubmit(e)} >
+              <Form className="d-flex mx-1" onSubmit={(e) => onSearchSubmit(e)} >
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -153,6 +146,14 @@ function Header() {
                 />
                 <Button variant="outline-success" type="submit">Search</Button>
               </Form>
+              {isAuth ? <Nav.Link className='text-danger' onClick={onClickLogout}>Log out</Nav.Link> :
+                (
+                  <>
+                    <Nav.Link><Link to="/" onClick={handleShow}>Log in</Link></Nav.Link>
+                    <Nav.Link><Link to="/" onClick={handleShowRegister}>Register</Link></Nav.Link>
+                  </>
+                )}
+
             </Nav>
           </Navbar.Collapse>
         </Container>
