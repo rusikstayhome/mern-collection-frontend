@@ -7,7 +7,7 @@ import axios from '../../axios'
 
 import './AddItemModal.css'
 
-const AddItemModal = ({ isEditing, itemId }) => {
+const AddItemModal = ({ isEditing, itemId, fields }) => {
   const inputFileRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -75,6 +75,8 @@ const AddItemModal = ({ isEditing, itemId }) => {
     }
   }
 
+  // console.log(fields[0])
+
 
   return (
     <Form onSubmit={onSubmit} className={`${theme === 'dark' ? 'dark-modal' : ''}`}>
@@ -89,7 +91,7 @@ const AddItemModal = ({ isEditing, itemId }) => {
           className={`mb-2 me-2 ${loading ? 'disabled' : ''}`}
           onClick={() => inputFileRef.current.click()}
         >
-          Download Image
+          {loading ? 'Loading...' : 'Download Image'}
         </Button>
         {imageUrl &&
           <Button type="submit" size="sm" variant="danger" className='mb-2' onClick={onClickRemoveImage}
@@ -121,12 +123,17 @@ const AddItemModal = ({ isEditing, itemId }) => {
             onChange={(e) => setTags(e.target.value)}
           />
         </Form.Group>
+        <hr className={theme} />
+
+
+
+
         <div className="d-flex justify-content-end">
           <Button type="submit" className="mb-3 mt-2"
           >{isEditing ? 'Save changes' : 'Add Item'}</Button>
         </div>
       </Modal.Body>
-    </Form>
+    </Form >
   )
 }
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { BsMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { DarkModeToggle } from "react-dark-mode-toggle-2";
 
 import axios from '../../axios'
 
@@ -122,16 +123,11 @@ function Header() {
               {isAuth && <Nav.Link><Link to="/collections" className={url === '/collections' && 'active'}>My Collections</Link></Nav.Link>}
             </Nav>
             <Nav>
-              <div id="darkmode">
-                <input type="checkbox" className="checkbox" id="checkbox"
-                  onChange={handleChange}
-                />
-                <label htmlFor="checkbox" className="label">
-                  <BsMoonStarsFill color="white" />
-                  <BsFillSunFill color="yellow" onClick={handleChange} />
-                  <div className="ball"></div>
-                </label>
-              </div>
+
+              <DarkModeToggle
+                onChange={handleChange}
+                isDarkMode={theme === 'dark'}
+                size={55} />
 
             </Nav>
 
