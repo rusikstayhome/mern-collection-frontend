@@ -21,7 +21,7 @@ const SearchResult = () => {
                 id={obj._id}
                 name={obj.name}
                 likes={obj.likes}
-                collectionId={obj.parentCollection._id}
+                collectionId={obj.parentCollection?._id}
                 tags={obj.tags}
                 userId={obj.user._id}
                 imageUrl={obj.imageUrl}

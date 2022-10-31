@@ -74,7 +74,7 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
   return (
 
     <>
-      <Card style={{ maxWidth: '20rem' }} className={`mb-3 item-card ${theme}`} bg={theme}>
+      <Card style={{ maxWidth: '30rem' }} className={`mb-3 item-card ${theme}`} bg={theme}>
         <div>
           <img src={imageUrl || NoPhoto} alt="" className='item-img' />
         </div>
