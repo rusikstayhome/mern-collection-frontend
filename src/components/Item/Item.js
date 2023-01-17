@@ -46,7 +46,6 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
     dispatch(fetchItems())
   }
 
-
   useEffect(() => {
     if (!isLoading) {
       axios.get(`/users/${userId}`).then(res => {
@@ -70,11 +69,10 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
   }, [isAuth])
 
 
-
   return (
 
     <>
-      <Card style={{ maxWidth: '30rem' }} className={`mb-3 item-card ${theme}`} bg={theme}>
+      <Card style={isLoading ? { maxWidth: '18rem' } : { maxWidth: '30rem' }} className={`mb-3 item-card ${theme}`} bg={theme}>
         <div>
           <img src={imageUrl || NoPhoto} alt="" className='item-img' />
         </div>
@@ -92,9 +90,6 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
             }
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted fs-6">{isLoading ? <Skeleton /> : user.username}</Card.Subtitle>
-          {/* <Card.Text>
-            {isLoading ? <Skeleton count={1} /> : name}
-          </Card.Text> */}
           <div className='item-tags'>
             {!isLoading && tags.map((obj, index) => {
               return <span key={index}> #{obj.trim()}</span>
@@ -124,7 +119,6 @@ const Item = ({ isLoading = true, name, likes, collectionId, tags, seeMore, id, 
         onHide={() => setShow(false)}
         dialogClassName="add-item__modal"
         aria-labelledby="example-custom-modal-styling-title"
-      // collectionId={id}
       >
         <AddItemModal isLoading={isLoading} isEditing={true} itemId={id} />
       </Modal>
